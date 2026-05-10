@@ -6,7 +6,7 @@
 **Mekân:** WSU (Sergey hoca tarafından koordine edilecek)
 **Co-presenters:**
   - **Sundar Krishnamurthy** — Security Engineering Leader, Expedia Group · CISSP
-  - **Cagri Temel** — Founder, Hezarfen LLC · IEEE Senior Member
+  - **Cagri Temel** — CTO, Hezarfen LLC · IEEE Senior Member
 
 **Davet:** Jeremy (program lideri), Dr. Sergey Lapin (akademik koordinatör)
 

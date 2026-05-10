@@ -1,7 +1,7 @@
 # WSU Data & Analytics Breakout — May 15, 2026
 
 **Co-presenters:**
-- **Cagri Temel** — Founder, Hezarfen LLC · IEEE Senior Member
+- **Cagri Temel** — CTO, Hezarfen LLC · IEEE Senior Member
 - **Sundar Krishnamurthy** — Security Engineering Leader, Expedia Group · CISSP
 
 **Venue:** Washington State University · Data & Analytics Breakout
