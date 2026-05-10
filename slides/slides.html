@@ -130,16 +130,28 @@
 <div class="reveal">
 <div class="slides">
 
-<!-- ============ SLIDE 1: TITLE ============ -->
+<!-- ============ SLIDE 1: JOINT TITLE ============ -->
 <section data-background-color="#0a0a0a">
-  <h1 style="font-size: 2.2em; line-height: 1.2;">From Black Boxes<br>to Glass Boxes</h1>
-  <h3 style="color: #4FC3F7; margin-top: 30px;">Building Explainable Neural Trees<br>for Safety-Critical Decisions</h3>
-  <p style="margin-top: 60px; font-size: 0.7em; color: #BBB;">
-    <strong>Cagri Temel</strong> — Founder, Hezarfen LLC<br>
-    <span style="color: #888;">IEEE Senior Member</span>
+  <span class="tag">JOINT SESSION</span>
+  <h1 style="font-size: 1.9em; line-height: 1.2;">From Industry Security<br>to <span class="accent">AI Security</span></h1>
+  <h3 style="color: #81C784; margin-top: 30px;">Building Defensible Decisions<br>in Safety-Critical Systems</h3>
+  <p style="margin-top: 50px; font-size: 0.65em; color: #BBB;">
+    <strong>Sundar Krishnamurthy</strong> — Security Engineering Leader, Expedia · CISSP<br>
+    <strong>Cagri Temel</strong> — Founder, Hezarfen LLC · IEEE Senior Member
   </p>
   <p style="font-size: 0.55em; color: #555; margin-top: 40px;">
     Washington State University · Data &amp; Analytics Breakout · May 15, 2026
+  </p>
+</section>
+
+<!-- ============ SLIDE 1B: SEGMENT TITLE (after Sundar) ============ -->
+<section data-background-color="#0a0a0a">
+  <span class="tag">CAGRI'S SEGMENT · 95 MIN</span>
+  <h1 style="font-size: 2em; line-height: 1.2;">From Black Boxes<br>to Glass Boxes</h1>
+  <h3 style="color: #4FC3F7; margin-top: 30px;">Building Explainable Neural Trees<br>for Adversarial Defense</h3>
+  <p style="margin-top: 50px; font-size: 0.65em; color: #BBB;">
+    <strong>Cagri Temel</strong> — Founder, Hezarfen LLC<br>
+    <span style="color: #888;">IEEE Senior Member</span>
   </p>
 </section>
 
@@ -155,6 +167,22 @@
     <li>Today's mission: in 2 hours and 45 minutes, you build, break, and explain a real model</li>
   </ul>
   <p class="small" style="margin-top: 30px;">github.com/cgrtml/neural-trees · linkedin.com/in/cagritemel</p>
+</section>
+
+<!-- ============ SLIDE 2B: SUNDAR BRIDGE ============ -->
+<section>
+  <span class="tag">FROM SUNDAR'S TALK</span>
+  <h2>Three layers attackers target</h2>
+  <table style="font-size: 0.7em; margin-top: 30px;">
+    <tr><th>Layer</th><th>Attack examples</th><th>Defense</th></tr>
+    <tr><td>Infrastructure</td><td>DDoS, supply chain, insider</td><td>Network controls, IAM, audit</td></tr>
+    <tr><td>Data</td><td>Breach, poisoning, tampering</td><td>Encryption, integrity checks</td></tr>
+    <tr class="highlight"><td><strong>Model</strong></td><td><strong>Adversarial inputs, evasion, sensor spoofing</strong></td><td><strong>Explainability + robustness</strong></td></tr>
+  </table>
+  <p class="center-emph" style="margin-top: 40px; font-size: 1em;">
+    Sundar covered the first two.<br>
+    <span class="accent">The next 95 minutes are about the third.</span>
+  </p>
 </section>
 
 <!-- ============ SLIDE 3: HOOK ============ -->
@@ -530,11 +558,11 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
 
 <!-- ============ SLIDE 26: ACTIVITY 2 INTRO ============ -->
 <section data-background-color="#1a0a1a">
-  <span class="tag" style="background: #BA68C8;">ACTIVITY 2 · 35 MIN</span>
-  <h2 style="font-size: 1.8em;">Adversarial Sensor Challenge</h2>
+  <span class="tag" style="background: #BA68C8;">ACTIVITY 2 · 25 MIN · AI SECURITY</span>
+  <h2 style="font-size: 1.8em;">Adversarial AI:<br>When Your Model is Compromised</h2>
   <p class="center-emph">
-    One of the engine's sensors has been compromised.<br>
-    <span class="accent">Which one?</span>
+    One of the engine's sensors has been spoofed.<br>
+    <span class="accent">Which one — and can your model tell you?</span>
   </p>
 </section>
 
@@ -542,17 +570,19 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
 <section>
   <h2>The scenario</h2>
   <p style="font-size: 0.8em; line-height: 1.6;">
-    Imagine you are the AI team at an airline.<br>
-    A maintenance ops alert arrives:
+    You are the AI team at an airline. Sundar's security team flags an incident:
   </p>
   <blockquote style="border-left: 4px solid #FFB74D; padding: 16px 24px; margin: 30px 0; background: rgba(255, 183, 77, 0.08); font-size: 0.78em;">
-    "A sensor on engine 17 has been compromised — drift, stuck-at, or noise injection. We don't know which. Determine the affected sensor before the next flight."
+    "An attacker compromised one of engine 17's sensors. We see drift, stuck-at, or injected noise on three different test files — but we don't know which sensor. <strong>Determine the affected sensor before the next flight.</strong>"
   </blockquote>
-  <p style="font-size: 0.8em;">You have two models in production:</p>
+  <p style="font-size: 0.78em;">You have two models in production:</p>
   <ul class="tight" style="font-size: 0.75em;">
-    <li>Your <strong>SoftDecisionTree</strong> (from Activity 1)</li>
-    <li>A <strong>RandomForest</strong> baseline</li>
+    <li>Your <strong>SoftDecisionTree</strong> (from Activity 1) — explainable</li>
+    <li>A <strong>RandomForest</strong> baseline — accurate but opaque</li>
   </ul>
+  <p class="small" style="margin-top: 20px;">
+    Which one helps you respond to the incident?
+  </p>
 </section>
 
 <!-- ============ SLIDE 28: TEAMS ============ -->
@@ -634,6 +664,46 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
   </p>
 </section>
 
+<!-- ============ SLIDE 33B: GITHUB SPRINT INTRO ============ -->
+<section data-background-color="#0a1a0a">
+  <span class="tag" style="background: #81C784;">SPRINT · 15 MIN</span>
+  <h2 style="font-size: 1.8em;">🔧 GitHub Contribution Sprint</h2>
+  <p class="center-emph">
+    Walk out of this room with a real open-source contribution<br>
+    on your GitHub profile.
+  </p>
+  <p class="small" style="margin-top: 30px;">15 minutes. Your name on a published ML library.</p>
+</section>
+
+<!-- ============ SLIDE 33C: SPRINT MECHANICS ============ -->
+<section>
+  <h2>How it works</h2>
+  <ol style="font-size: 0.78em; line-height: 1.7;">
+    <li>Open <strong>github.com/cgrtml/neural-trees</strong> → <em>Issues</em> tab</li>
+    <li>Filter by label: <code>good first issue</code> — pick one (10–20 min scope)</li>
+    <li>Comment "I'm taking this" so no duplicates</li>
+    <li>Fork the repo, edit, open a PR</li>
+    <li>I'll review live — simple PRs get merged on the spot</li>
+  </ol>
+  <p class="center-emph" style="margin-top: 30px; font-size: 1em;">
+    20+ issues waiting · pick what fits your level
+  </p>
+</section>
+
+<!-- ============ SLIDE 33D: WHY DO IT ============ -->
+<section>
+  <h2>Why this is worth your 15 minutes</h2>
+  <ul class="tight" style="font-size: 0.78em; line-height: 1.6;">
+    <li><strong>Concrete OSS contribution</strong> on your profile — visible to recruiters, internships, grad-school admissions.</li>
+    <li>You'll be part of a published Python ML library (PyPI: <code>neural-trees</code>).</li>
+    <li><strong>You'll be in the README</strong> — I'll add a "WSU Workshop Contributors" section listing every merged PR.</li>
+    <li>It's a real proof you can collaborate on a codebase, not just clone tutorials.</li>
+  </ul>
+  <p class="center-emph" style="margin-top: 40px;">
+    <span class="accent">Open the repo. Pick an issue. Go.</span>
+  </p>
+</section>
+
 <!-- ============ SLIDE 34: EU AI ACT ============ -->
 <section>
   <span class="tag warn" style="background: #FFB74D;">REGULATORY CONTEXT</span>
@@ -654,15 +724,15 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
 
 <!-- ============ SLIDE 35: WRAPPING UP ============ -->
 <section data-background-color="#0a1a0a">
-  <span class="tag" style="background: #81C784;">WRAP-UP · 10 MIN</span>
+  <span class="tag" style="background: #81C784;">JOINT WRAP-UP · 5 MIN</span>
   <h2>What you walk out with</h2>
-  <ol style="font-size: 0.85em; line-height: 1.8; margin-top: 30px;">
-    <li><span class="accent">Explainability is not a luxury.</span><br>
-      <span class="small">It is mandatory in safety-critical AI.</span></li>
-    <li><span class="accent">Soft Decision Trees give you both worlds.</span><br>
-      <span class="small">Neural-net accuracy + tree-level interpretability.</span></li>
+  <ol style="font-size: 0.8em; line-height: 1.7; margin-top: 30px;">
+    <li><span class="accent">Security and AI safety are converging.</span><br>
+      <span class="small">What Sundar showed for systems is what we showed for models.</span></li>
+    <li><span class="accent">Explainability is a defensive capability — not a luxury.</span><br>
+      <span class="small">Mandatory in safety-critical AI under EU AI Act, FDA, FAA, OCC.</span></li>
     <li><span class="accent">You ran this yourself.</span><br>
-      <span class="small">Real CMAPSS data. Real model. Real audit trail.</span></li>
+      <span class="small">Real CMAPSS data. Real model. Real audit trail. And maybe a real OSS contribution.</span></li>
   </ol>
 </section>
 
@@ -684,12 +754,23 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
 
 <!-- ============ SLIDE 37: LINKS ============ -->
 <section>
-  <h2>Links</h2>
-  <p class="big-link">github.com/cgrtml/neural-trees</p>
-  <p class="big-link">github.com/cgrtml/wsu-workshop-may15</p>
-  <p class="big-link">linkedin.com/in/cagritemel</p>
-  <p class="big-link">cagritemelusa@gmail.com</p>
-  <p class="small" style="margin-top: 50px;">Slides &amp; notebooks live at the workshop repo above.</p>
+  <h2>Stay in touch</h2>
+  <div class="two-col" style="margin-top: 30px;">
+    <div>
+      <h3>Sundar Krishnamurthy</h3>
+      <p class="small">Security Engineering · Expedia Group · CISSP</p>
+      <p class="big-link" style="font-size: 0.9em;">linkedin.com/in/sundarkrishnamurthy</p>
+    </div>
+    <div>
+      <h3>Cagri Temel</h3>
+      <p class="small">Hezarfen LLC · IEEE Senior Member</p>
+      <p class="big-link" style="font-size: 0.9em;">github.com/cgrtml/neural-trees</p>
+      <p class="big-link" style="font-size: 0.9em;">linkedin.com/in/cagritemel</p>
+    </div>
+  </div>
+  <p class="small" style="margin-top: 40px;">
+    Workshop materials: <strong>github.com/cgrtml/wsu-workshop-may15</strong>
+  </p>
 </section>
 
 <!-- ============ SLIDE 38: THANK YOU ============ -->
@@ -700,7 +781,7 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
     for the invitation.
   </p>
   <p style="font-size: 0.7em; margin-top: 60px; color: #888;">
-    Questions? I'll stay 5 minutes after.
+    Questions? We'll stay 5 minutes after.
   </p>
 </section>
 

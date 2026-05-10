@@ -1,9 +1,13 @@
-# WSU Workshop — From Black Boxes to Glass Boxes
+# WSU Workshop — From Industry Security to AI Security
 
-**Instructor:** Cagri Temel — Hezarfen LLC, IEEE Senior Member
+**Co-presenters:**
+- **Sundar Krishnamurthy** — Security Engineering Leader, Expedia Group · CISSP
+- **Cagri Temel** — Founder, Hezarfen LLC · IEEE Senior Member
+
 **Venue:** Washington State University · Data & Analytics Breakout
 **Date:** May 15, 2026 · 09:00–11:45
-**Topic:** Building Explainable Neural Trees for Safety-Critical Decisions
+**Joint topic:** Building Defensible Decisions in Safety-Critical Systems
+**Cagri's segment (~95 min):** From Black Boxes to Glass Boxes — Explainable Neural Trees for Adversarial Defense
 
 This repository contains everything needed to run the 2-hour-45-minute workshop:
 slides, two student notebooks (Colab-ready), the NASA CMAPSS data, three
