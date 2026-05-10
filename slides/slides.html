@@ -130,25 +130,24 @@
 <div class="reveal">
 <div class="slides">
 
-<!-- ============ SLIDE 1: JOINT TITLE ============ -->
+<!-- ============ SLIDE 1: JOINT COVER ============ -->
 <section data-background-color="#0a0a0a">
-  <span class="tag">JOINT SESSION</span>
-  <h1 style="font-size: 1.9em; line-height: 1.2;">From Industry Security<br>to <span class="accent">AI Security</span></h1>
-  <h3 style="color: #81C784; margin-top: 30px;">Building Defensible Decisions<br>in Safety-Critical Systems</h3>
-  <p style="margin-top: 50px; font-size: 0.65em; color: #BBB;">
-    <strong>Sundar Krishnamurthy</strong> — Security Engineering Leader, Expedia · CISSP<br>
-    <strong>Cagri Temel</strong> — Founder, Hezarfen LLC · IEEE Senior Member
+  <span class="tag">WSU · MAY 15, 2026</span>
+  <h1 style="font-size: 2em; line-height: 1.2;">Data &amp; Analytics<br>Breakout Session</h1>
+  <p style="margin-top: 50px; font-size: 0.7em; color: #BBB;">
+    <strong>Cagri Temel</strong> — Founder, Hezarfen LLC · IEEE Senior Member<br>
+    <strong>Sundar Krishnamurthy</strong> — Security Engineering Leader, Expedia · CISSP
   </p>
   <p style="font-size: 0.55em; color: #555; margin-top: 40px;">
-    Washington State University · Data &amp; Analytics Breakout · May 15, 2026
+    Washington State University
   </p>
 </section>
 
-<!-- ============ SLIDE 1B: SEGMENT TITLE (after Sundar) ============ -->
+<!-- ============ SLIDE 1B: CAGRI'S SEGMENT TITLE ============ -->
 <section data-background-color="#0a0a0a">
-  <span class="tag">CAGRI'S SEGMENT · 95 MIN</span>
+  <span class="tag">DATA SCIENCE SEGMENT · 95 MIN</span>
   <h1 style="font-size: 2em; line-height: 1.2;">From Black Boxes<br>to Glass Boxes</h1>
-  <h3 style="color: #4FC3F7; margin-top: 30px;">Building Explainable Neural Trees<br>for Adversarial Defense</h3>
+  <h3 style="color: #4FC3F7; margin-top: 30px;">Building Explainable Neural Trees<br>for Safety-Critical Decisions</h3>
   <p style="margin-top: 50px; font-size: 0.65em; color: #BBB;">
     <strong>Cagri Temel</strong> — Founder, Hezarfen LLC<br>
     <span style="color: #888;">IEEE Senior Member</span>
@@ -169,19 +168,17 @@
   <p class="small" style="margin-top: 30px;">github.com/cgrtml/neural-trees · linkedin.com/in/cagritemel</p>
 </section>
 
-<!-- ============ SLIDE 2B: SUNDAR BRIDGE ============ -->
+<!-- ============ SLIDE 2B: TRANSITION ============ -->
 <section>
-  <span class="tag">FROM SUNDAR'S TALK</span>
-  <h2>Three layers attackers target</h2>
-  <table style="font-size: 0.7em; margin-top: 30px;">
-    <tr><th>Layer</th><th>Attack examples</th><th>Defense</th></tr>
-    <tr><td>Infrastructure</td><td>DDoS, supply chain, insider</td><td>Network controls, IAM, audit</td></tr>
-    <tr><td>Data</td><td>Breach, poisoning, tampering</td><td>Encryption, integrity checks</td></tr>
-    <tr class="highlight"><td><strong>Model</strong></td><td><strong>Adversarial inputs, evasion, sensor spoofing</strong></td><td><strong>Explainability + robustness</strong></td></tr>
-  </table>
-  <p class="center-emph" style="margin-top: 40px; font-size: 1em;">
-    Sundar covered the first two.<br>
-    <span class="accent">The next 95 minutes are about the third.</span>
+  <span class="tag">SHIFTING GEARS</span>
+  <h2>From systems to data</h2>
+  <p style="font-size: 0.85em; line-height: 1.6; margin-top: 30px;">
+    Sundar showed how systems are protected.<br>
+    For the next 95 minutes, we shift to <span class="accent">how data-driven systems make decisions</span> —
+    and how we make those decisions <span class="accent">trustworthy</span> in safety-critical settings.
+  </p>
+  <p class="center-emph" style="margin-top: 50px;">
+    Today's case: <span class="accent">a turbofan engine that needs to predict its own failure.</span>
   </p>
 </section>
 
@@ -558,11 +555,11 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
 
 <!-- ============ SLIDE 26: ACTIVITY 2 INTRO ============ -->
 <section data-background-color="#1a0a1a">
-  <span class="tag" style="background: #BA68C8;">ACTIVITY 2 · 25 MIN · AI SECURITY</span>
-  <h2 style="font-size: 1.8em;">Adversarial AI:<br>When Your Model is Compromised</h2>
+  <span class="tag" style="background: #BA68C8;">ACTIVITY 2 · 25 MIN · TEAM CHALLENGE</span>
+  <h2 style="font-size: 1.8em;">Sensor Fault Detection</h2>
   <p class="center-emph">
-    One of the engine's sensors has been spoofed.<br>
-    <span class="accent">Which one — and can your model tell you?</span>
+    One of engine 17's sensors is reporting bad data.<br>
+    <span class="accent">Which sensor — and can your model tell you why?</span>
   </p>
 </section>
 
@@ -570,10 +567,10 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
 <section>
   <h2>The scenario</h2>
   <p style="font-size: 0.8em; line-height: 1.6;">
-    You are the AI team at an airline. Sundar's security team flags an incident:
+    You are the data science team at an airline. Maintenance ops sends you three suspicious test files for the same engine:
   </p>
   <blockquote style="border-left: 4px solid #FFB74D; padding: 16px 24px; margin: 30px 0; background: rgba(255, 183, 77, 0.08); font-size: 0.78em;">
-    "An attacker compromised one of engine 17's sensors. We see drift, stuck-at, or injected noise on three different test files — but we don't know which sensor. <strong>Determine the affected sensor before the next flight.</strong>"
+    "Something is wrong with engine 17. The pattern looks like a sensor drift, a frozen sensor, or noise spikes — but we cannot tell which channel is at fault. <strong>Localize the faulty sensor before the next flight.</strong>"
   </blockquote>
   <p style="font-size: 0.78em;">You have two models in production:</p>
   <ul class="tight" style="font-size: 0.75em;">
@@ -581,7 +578,7 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
     <li>A <strong>RandomForest</strong> baseline — accurate but opaque</li>
   </ul>
   <p class="small" style="margin-top: 20px;">
-    Which one helps you respond to the incident?
+    The same technique works for hardware failures and adversarial attacks — both manifest as anomalous sensor patterns the model has to flag.
   </p>
 </section>
 
@@ -727,12 +724,12 @@ print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
   <span class="tag" style="background: #81C784;">JOINT WRAP-UP · 5 MIN</span>
   <h2>What you walk out with</h2>
   <ol style="font-size: 0.8em; line-height: 1.7; margin-top: 30px;">
-    <li><span class="accent">Security and AI safety are converging.</span><br>
-      <span class="small">What Sundar showed for systems is what we showed for models.</span></li>
-    <li><span class="accent">Explainability is a defensive capability — not a luxury.</span><br>
-      <span class="small">Mandatory in safety-critical AI under EU AI Act, FDA, FAA, OCC.</span></li>
-    <li><span class="accent">You ran this yourself.</span><br>
-      <span class="small">Real CMAPSS data. Real model. Real audit trail. And maybe a real OSS contribution.</span></li>
+    <li><span class="accent">Explainability is mandatory in safety-critical AI.</span><br>
+      <span class="small">Required by EU AI Act, FDA, FAA, OCC for high-risk systems.</span></li>
+    <li><span class="accent">Soft Decision Trees give you both worlds.</span><br>
+      <span class="small">Neural-network accuracy with tree-level interpretability.</span></li>
+    <li><span class="accent">You ran this yourself, on real NASA data.</span><br>
+      <span class="small">Trained a model · localized a sensor fault · maybe shipped an OSS contribution.</span></li>
   </ol>
 </section>
 

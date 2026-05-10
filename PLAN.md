@@ -11,10 +11,12 @@
 **Davet:** Jeremy (program lideri), Dr. Sergey Lapin (akademik koordinatör)
 
 **Joint oturum başlığı:**
-> *From Industry Security to AI Security: Building Defensible Decisions in Safety-Critical Systems*
+> *Data & Analytics Breakout — Cagri & Sundar*
 
 **Cagri'nin segmentinin başlığı:**
-> *From Black Boxes to Glass Boxes: Building Explainable Neural Trees for Adversarial Defense*
+> *From Black Boxes to Glass Boxes: Building Explainable Neural Trees for Safety-Critical Decisions*
+
+**Konunun çerçevesi:** Workshop tamamen senin uzmanlık alanın — explainable ML + predictive maintenance + NASA CMAPSS turbofan engine RUL tahmini. Sundar'ın security segmentine sadece **bir köprü cümlesi** kuruluyor: "fault detection tekniği hem hardware failure hem adversarial attack için aynı şekilde işliyor." Security ana tema değil.
 
 **Hedef kitle:** WSU lisans öğrencileri (CS / Engineering / Data Science karışık seviye)
 **Beklenen katılımcı sayısı:** 25–50 öğrenci
@@ -25,12 +27,12 @@
 
 | Zaman | Süre | Kim | Bölüm |
 |-------|------|-----|-------|
-| 09:00 – 09:10 | 10 dk | **Joint** | Açılış: "Why AI Security Matters in Safety-Critical Systems" |
+| 09:00 – 09:10 | 10 dk | **Joint** | Açılış: "Why Trust Matters in Safety-Critical Systems" |
 | 09:10 – 09:50 | 40 dk | **Sundar** | Industry security landscape (Expedia stories, threat modeling) |
 | 09:50 – 10:00 | 10 dk | **Joint** | Geçiş köprüsü + Q&A — "From systems security to AI security" |
 | 10:00 – 10:50 | 50 dk | **Cagri** | Activity #1 — Train Your Own Neural Tree |
 | 10:50 – 11:00 | 10 dk | — | ☕ Çay molası |
-| 11:00 – 11:25 | 25 dk | **Cagri** | Activity #2 — Adversarial AI: When Your Model is Compromised |
+| 11:00 – 11:25 | 25 dk | **Cagri** | Activity #2 — Sensor Fault Detection Challenge |
 | 11:25 – 11:40 | 15 dk | **Cagri** | 🔧 GitHub Contribution Sprint |
 | 11:40 – 11:45 | 5 dk | **Joint** | Closing + her iki taraftan contact info |
 
@@ -143,16 +145,17 @@ Her öğrenci kendi Colab notebook'unda CMAPSS verisiyle bir Soft Decision Tree 
 
 ---
 
-## Activity #2 — Adversarial AI: When Your Model is Compromised (11:00 – 11:25, 25 dk)
+## Activity #2 — Sensor Fault Detection Challenge (11:00 – 11:25, 25 dk)
 
 ### Hedef
-Workshop'un yıldız aktivitesi. Takım yarışması formatında. **AI Security** çerçevesinde — Sundar'ın segmentiyle tematik olarak bağlanır.
+Workshop'un yıldız aktivitesi. Takım yarışması formatında. **Predictive maintenance / sensor fault localization** ana çerçeve — bu senin uzmanlık alanın. Security ile bağlantı sadece kapanışta bir cümle.
 
 ### Dakika dakika
 
 **11:00 – 11:04** (4 dk) — *Senaryoyu kur*
-- Slayt: "An attacker has compromised one of the engine's sensors — drift, stuck-at, or noise injection. Which sensor? Can your AI model tell you?"
-- Sundar'a referans: "This is exactly the threat model Sundar talked about — adversarial input. But applied to AI."
+- Slayt: "Engine 17'nin sensörlerinden birinde bir şey ters gidiyor — drift, stuck-at, ya da gürültü artışı. Hangi sensör? Modelin sana söyleyebilir mi?"
+- Predictive maintenance bağlamı: "Sensörler her gün arızalanır. Hardware aging, calibration drift, noise spikes — bunlar gerçek operasyonel problemler."
+- Kapanış cümlesi: "Bu teknik adversarial attack için de aynı şekilde işliyor — ki Sundar'ın bu sabah bahsettiği tarafa da bağlanıyor."
 - "Doğru cevabı bulan ilk takım Hezarfen sticker kazanır."
 
 **11:04 – 11:06** (2 dk) — *Takımları kur*
@@ -174,7 +177,7 @@ Workshop'un yıldız aktivitesi. Takım yarışması formatında. **AI Security*
 
 **11:22 – 11:25** (3 dk) — *Big picture mesaj*
 - "Random forest tahminini değiştirdi ama nedenini söyleyemedi. Soft tree'nin split weights'leri tam olarak hangi sensörün modelin kararını etkilediğini gösterdi."
-- "Bu, **adversarial AI defense** için temel bir araç. EU AI Act'in 'high-risk system' tanımının istediği şey — Sundar'ın bahsettiği audit trail'in AI seviyesindeki karşılığı."
+- "Bu, predictive maintenance için temel bir capability. EU AI Act'in 'high-risk system' tanımının istediği şey — ve aynı teknik adversarial attack detection için de işliyor (Sundar'ın bu sabah bahsettiği taraf)."
 
 ---
 

@@ -1,13 +1,13 @@
-# WSU Workshop — From Industry Security to AI Security
+# WSU Data & Analytics Breakout — May 15, 2026
 
 **Co-presenters:**
-- **Sundar Krishnamurthy** — Security Engineering Leader, Expedia Group · CISSP
 - **Cagri Temel** — Founder, Hezarfen LLC · IEEE Senior Member
+- **Sundar Krishnamurthy** — Security Engineering Leader, Expedia Group · CISSP
 
 **Venue:** Washington State University · Data & Analytics Breakout
 **Date:** May 15, 2026 · 09:00–11:45
-**Joint topic:** Building Defensible Decisions in Safety-Critical Systems
-**Cagri's segment (~95 min):** From Black Boxes to Glass Boxes — Explainable Neural Trees for Adversarial Defense
+
+**Cagri's segment (~95 min):** *From Black Boxes to Glass Boxes — Building Explainable Neural Trees for Safety-Critical Decisions.* Hands-on workshop using NASA CMAPSS turbofan engine data to train soft decision trees, traverse model explanations, and detect faulty sensors with explainability.
 
 This repository contains everything needed to run the 2-hour-45-minute workshop:
 slides, two student notebooks (Colab-ready), the NASA CMAPSS data, three
