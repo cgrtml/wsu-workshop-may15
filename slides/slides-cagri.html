@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>From Black Boxes to Glass Boxes | WSU Workshop, May 15 2026</title>
+<meta name="viewport" content="width=1024">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+<style>
+  .reveal {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+  }
+  .reveal h1 { font-size: 2.4em; }
+  .reveal h2 { font-size: 1.6em; color: #4FC3F7; }
+  .reveal h3 { font-size: 1.2em; color: #81D4FA; }
+  .reveal .accent { color: #4FC3F7; }
+  .reveal .warn { color: #FFB74D; }
+  .reveal .good { color: #81C784; }
+  .reveal .small { font-size: 0.7em; color: #BBB; }
+  .reveal .smaller { font-size: 0.55em; color: #999; }
+  .reveal .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #4FC3F7;
+    color: #000;
+    border-radius: 4px;
+    font-size: 0.6em;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .reveal table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 0.7em;
+  }
+  .reveal table th, .reveal table td {
+    padding: 0.4em 0.8em;
+    border-bottom: 1px solid #444;
+  }
+  .reveal table th {
+    background: #1a1a1a;
+    color: #4FC3F7;
+  }
+  .reveal table tr.highlight {
+    background: rgba(79, 195, 247, 0.1);
+  }
+  .two-col {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+  }
+  .two-col > div { flex: 1; }
+  .vs-block {
+    border: 2px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  .vs-block.black { background: rgba(244, 67, 54, 0.08); border-color: #EF5350; }
+  .vs-block.glass { background: rgba(76, 175, 80, 0.08); border-color: #66BB6A; }
+  .vs-block h3 { margin-top: 0; }
+  .reveal pre code {
+    font-size: 0.75em;
+    line-height: 1.4;
+    padding: 18px;
+    border-radius: 6px;
+  }
+  .qr-block {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    display: inline-block;
+    margin: 20px;
+  }
+  .footer {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-size: 0.5em;
+    color: #555;
+  }
+  .big-link {
+    display: block;
+    font-size: 1.1em;
+    color: #4FC3F7;
+    margin: 18px 0;
+    word-break: break-all;
+  }
+  .timer {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    font-size: 0.5em;
+    color: #555;
+    font-family: monospace;
+  }
+  .center-emph {
+    font-size: 1.4em;
+    line-height: 1.5;
+    margin: 40px 0;
+  }
+  ul.tight li { margin: 6px 0; }
+  .reveal section img {
+    border: none;
+    box-shadow: none;
+    background: none;
+  }
+  .ascii-tree {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.65em;
+    text-align: left;
+    line-height: 1.3;
+    background: #111;
+    padding: 24px;
+    border-radius: 8px;
+    color: #DDD;
+  }
+  .step-card {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 22px;
+    margin-top: 14px;
+    text-align: left;
+  }
+  .step-card h4 {
+    font-size: 0.55em;
+    color: #4FC3F7;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .step-card .step-code {
+    background: #141414;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.42em;
+    line-height: 1.5;
+    color: #E0E0E0;
+    white-space: pre;
+    overflow-x: auto;
+    border: 1px solid #2a2a2a;
+  }
+  .step-card .step-out {
+    background: #0e1d0e;
+    border-left: 3px solid #66BB6A;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.46em;
+    line-height: 1.5;
+    color: #D8E8D8;
+    white-space: pre-wrap;
+  }
+  .step-card .step-out.image-out {
+    padding: 6px;
+    background: #0a0a0a;
+    border-left: 3px solid #66BB6A;
+  }
+  .step-card .step-out img {
+    width: 100%;
+    border-radius: 4px;
+    display: block;
+  }
+  .step-tag {
+    display: inline-block;
+    background: #4FC3F7;
+    color: #000;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.5em;
+    font-weight: 700;
+    margin-right: 10px;
+    letter-spacing: 0.05em;
+  }
+  .step-tag.a2 { background: #BA68C8; }
+  .step-hint {
+    font-size: 0.5em;
+    color: #888;
+    margin-top: 10px;
+    font-style: italic;
+  }
+  section.step h2 {
+    font-size: 1.0em;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section data-background-color="#0a0a0a">
+  <span class="tag">WSU · MAY 15, 2026</span>
+  <h1 style="font-size: 2em; line-height: 1.2;">From Black Boxes<br>to Glass Boxes</h1>
+  <h3 style="color: #4FC3F7; margin-top: 30px;">Building Explainable Neural Trees<br>for Safety-Critical Decisions</h3>
+  <p style="margin-top: 50px; font-size: 0.7em; color: #BBB;">
+    <strong>Cagri Temel</strong>, CTO at Hezarfen LLC · IEEE Senior Member
+  </p>
+  <p style="font-size: 0.55em; color: #555; margin-top: 30px;">
+    Washington State University · Data &amp; Analytics Breakout
+  </p>
+</section>
+
+<!-- ============ SLIDE 2: WHO I AM ============ -->
+<section>
+  <span class="tag">WHO IS RUNNING THIS</span>
+  <h2>Cagri Temel</h2>
+  <ul class="tight" style="font-size: 0.75em;">
+    <li>CTO of <strong>Hezarfen LLC</strong>, building explainable AI for regulated industries</li>
+    <li>IEEE Senior Member · open-source maintainer</li>
+    <li>Author of <strong>neural-trees</strong> (PyPI, MIT), the package you will use today</li>
+    <li>Workshop paper: <em>Robust and Uncertainty-Aware RUL Prediction with Temporal Neural Trees</em> (NASA CMAPSS)</li>
+    <li>Today's mission: in 2 hours and 45 minutes, you build, break, and explain a real model</li>
+  </ul>
+  <p class="small" style="margin-top: 30px;">github.com/cgrtml/neural-trees · linkedin.com/in/cagritemel</p>
+</section>
+
+<!-- ============ SLIDE 2B: TODAY'S MISSION ============ -->
+<section>
+  <span class="tag">TODAY'S MISSION</span>
+  <h2>Data-driven decisions, when the cost of being wrong is high</h2>
+  <p style="font-size: 0.85em; line-height: 1.6; margin-top: 30px;">
+    For the next few hours we will look at <span class="accent">how data-driven systems make decisions</span>,
+    and at how we make those decisions <span class="accent">trustworthy</span> in safety-critical settings.
+  </p>
+  <p class="center-emph" style="margin-top: 50px;">
+    Today's case: <span class="accent">a turbofan engine that needs to predict its own failure.</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 3: HOOK ============ -->
+<section data-background-color="#0a0a0a">
+  <h2 style="font-size: 2em;">A turbofan engine.</h2>
+  <p class="center-emph">When will it fail?</p>
+  <p class="small">If you knew with certainty, what would you do differently?</p>
+</section>
+
+<!-- ============ SLIDE 4: WHY IT MATTERS ============ -->
+<section>
+  <span class="tag">STAKES</span>
+  <h2>Getting this wrong is expensive</h2>
+  <ul class="tight" style="font-size: 0.8em;">
+    <li><span class="warn">Predict too late.</span> Engine fails mid-flight. Lives lost.</li>
+    <li><span class="warn">Predict too early.</span> Healthy engines replaced. $100M wasted.</li>
+    <li><span class="warn">Predict accurately but cannot explain.</span> FAA refuses to certify your system.</li>
+  </ul>
+  <p class="center-emph" style="font-size: 1.1em; margin-top: 50px;">
+    Accuracy alone is not enough.<br>
+    <span class="accent">You also need to <em>defend</em> the prediction.</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 5: NASA CMAPSS ============ -->
+<section>
+  <span class="tag">DATASET</span>
+  <h2>NASA CMAPSS</h2>
+  <p style="font-size: 0.75em;">Commercial Modular Aero-Propulsion System Simulation</p>
+  <ul class="tight" style="font-size: 0.7em;">
+    <li><strong>100 turbofan engines</strong>, simulated to failure</li>
+    <li><strong>21 sensors per timestep</strong>: temperatures, pressures, fan speeds, fuel flow</li>
+    <li>Each engine logs hundreds of flight cycles before failing</li>
+    <li>Public, open data, cited in 1,000+ academic papers</li>
+  </ul>
+  <p class="smaller" style="margin-top: 20px;">Source: NASA Prognostics Center of Excellence · ti.arc.nasa.gov</p>
+</section>
+
+<!-- ============ SLIDE 6: WHAT IS RUL ============ -->
+<section>
+  <span class="tag">THE TARGET</span>
+  <h2>Remaining Useful Life (RUL)</h2>
+  <p style="font-size: 0.85em; margin: 30px 0;">
+    The number of flight cycles left before this engine fails.
+  </p>
+  <div class="ascii-tree" style="text-align: center;">
+    cycle 0  ────────────────────────────────────►  cycle 192 (failure)<br>
+    RUL=192  RUL=150  RUL=80   RUL=30   RUL=10   <span class="warn">RUL=0  💥</span>
+  </div>
+  <p class="small" style="margin-top: 25px;">
+    Train: complete trajectories. Test: partial trajectories, where you predict RUL from what you can see.
+  </p>
+</section>
+
+<!-- ============ SLIDE 7: 21 SENSORS ============ -->
+<section>
+  <span class="tag">WHAT YOU GET PER CYCLE</span>
+  <h2>21 sensor channels</h2>
+  <table style="font-size: 0.55em;">
+    <tr><th>#</th><th>Sensor</th><th>What it measures</th></tr>
+    <tr><td>2</td><td>T24</td><td>LPC outlet temperature</td></tr>
+    <tr><td>3</td><td>T30</td><td>HPC outlet temperature</td></tr>
+    <tr><td>4</td><td>T50</td><td>LPT outlet temperature</td></tr>
+    <tr class="highlight"><td>7</td><td>P30</td><td>HPC outlet pressure</td></tr>
+    <tr><td>8</td><td>Nf</td><td>Physical fan speed</td></tr>
+    <tr><td>9</td><td>Nc</td><td>Physical core speed</td></tr>
+    <tr class="highlight"><td>11</td><td>Ps30</td><td>Static pressure HPC outlet</td></tr>
+    <tr><td>12</td><td>phi</td><td>Ratio of fuel flow to Ps30</td></tr>
+    <tr class="highlight"><td>14</td><td>NRc</td><td>Corrected core speed</td></tr>
+    <tr><td>15</td><td>BPR</td><td>Bypass ratio</td></tr>
+    <tr><td>17</td><td>htBleed</td><td>Bleed enthalpy</td></tr>
+    <tr><td>20</td><td>W31</td><td>HPT coolant bleed</td></tr>
+  </table>
+  <p class="smaller">Highlighted rows: most predictive after feature selection.</p>
+</section>
+
+<!-- ============ SLIDE 8: LSTM RESULT ============ -->
+<section>
+  <span class="tag">A MODERN APPROACH</span>
+  <h2>Deep learning gets us close</h2>
+  <pre><code class="language-python">model = nn.LSTM(input_size=17, hidden_size=64, num_layers=2)
+# … training …
+RMSE on test set: 15.49 cycles
+R²: 0.855</code></pre>
+  <p style="font-size: 0.85em; margin-top: 30px;">That's pretty good. About 15 cycles off, on average.</p>
+  <p class="center-emph" style="margin-top: 40px;">
+    So we ship it to the FAA, right?
+  </p>
+</section>
+
+<!-- ============ SLIDE 9: REGULATOR PROBLEM ============ -->
+<section data-background-color="#1a0a0a">
+  <h2 style="color: #EF5350;">No.</h2>
+  <p class="center-emph">
+    Regulators don't ask <em>"how accurate is your model?"</em><br>
+    <span class="accent">They ask "why did your model say that?"</span>
+  </p>
+  <p style="font-size: 0.7em; margin-top: 50px;">
+    FAA · FDA · OCC (banking) · EU AI Act<br>
+    <span class="small">All require traceable, explainable decisions for high-risk systems.</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 10: BLACK BOX VS GLASS BOX ============ -->
+<section>
+  <h2>Black Box vs. Glass Box</h2>
+  <div class="two-col" style="margin-top: 30px;">
+    <div class="vs-block black">
+      <h3>🔲 Black Box</h3>
+      <p style="font-size: 0.7em;">LSTM, deep CNN, transformer</p>
+      <p class="good" style="font-size: 0.7em;">✓ High accuracy</p>
+      <p class="warn" style="font-size: 0.7em;">✗ "Why?" → no answer</p>
+      <p class="warn" style="font-size: 0.7em;">✗ FAA / FDA / OCC: rejected</p>
+    </div>
+    <div class="vs-block glass">
+      <h3>🪟 Glass Box</h3>
+      <p style="font-size: 0.7em;">Decision tree, linear regression</p>
+      <p class="good" style="font-size: 0.7em;">✓ Fully traceable</p>
+      <p class="warn" style="font-size: 0.7em;">✗ Lower accuracy</p>
+      <p class="good" style="font-size: 0.7em;">✓ Regulators: approved</p>
+    </div>
+  </div>
+  <p class="center-emph" style="margin-top: 50px; font-size: 1em;">
+    Today's question: <span class="accent">can we have both?</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 11: DECISION TREE REFRESH ============ -->
+<section>
+  <span class="tag">SECTION 2 · CONCEPT</span>
+  <h2>Classic Decision Tree</h2>
+  <div class="ascii-tree">
+                 [ Sensor 11 (Ps30) > 47.5 ? ]<br>
+                       /                    \<br>
+                     yes                     no<br>
+                     /                        \<br>      [ Sensor 14 (NRc) > 8138 ? ]      [ HEALTHY ]<br>
+            /             \<br>
+          yes              no<br>
+           /                \<br>     [ CRITICAL ]         [ CAUTION ]
+  </div>
+  <p style="font-size: 0.75em; margin-top: 30px;">
+    Beautifully explainable. <span class="warn">Often poor accuracy.</span><br>
+    The cause is <strong>hard splits</strong>: a 0.01 difference in a sensor flips the entire path.
+  </p>
+</section>
+
+<!-- ============ SLIDE 12: HARD SPLIT ============ -->
+<section>
+  <h2>Hard split</h2>
+  <pre><code class="language-python">def hard_split(x, threshold):
+    if x > threshold:
+        return "right"
+    else:
+        return "left"</code></pre>
+  <p style="font-size: 0.75em; margin-top: 20px;">
+    Output: <code>"left"</code> or <code>"right"</code>. Discrete. <span class="warn">No gradient.</span>
+  </p>
+  <p style="font-size: 0.75em;">
+    Cannot train with backpropagation. Tree built greedily, one node at a time.
+  </p>
+</section>
+
+<!-- ============ SLIDE 13: SOFT SPLIT ============ -->
+<section>
+  <h2>Soft split</h2>
+  <pre><code class="language-python">def soft_split(x, w, b):
+    # sigmoid: σ(z) = 1 / (1 + exp(-z))
+    p_right = sigmoid(w @ x - b)
+    return p_right       # ∈ [0, 1]</code></pre>
+  <p style="font-size: 0.75em; margin-top: 20px;">
+    Output: a <strong>probability</strong> of going right. Continuous. <span class="good">Gradient flows.</span>
+  </p>
+  <p style="font-size: 0.75em;">
+    Train the entire tree end-to-end with backprop, like a small neural network.
+  </p>
+</section>
+
+<!-- ============ SLIDE 14: SOFT TREE VISUAL ============ -->
+<section>
+  <h2>Soft Decision Tree</h2>
+  <div class="ascii-tree">
+                 [ σ(w·x − b) → 0.82 right ]<br>
+                       /              \<br>                  0.82                0.18<br>
+                    /                      \<br>      [ σ(w·x − b) → 0.30 ]      [ leaf: P(C, H, W) ]<br>
+            /          \<br>          0.30          0.70<br>
+           /              \<br>     [ leaf ]         [ leaf ]<br>
+  </div>
+  <p style="font-size: 0.75em; margin-top: 20px;">
+    Every leaf gets a <strong>weighted vote</strong> based on path probability.<br>
+    Final prediction = sum over all leaves.
+  </p>
+</section>
+
+<!-- ============ SLIDE 15: BEST OF BOTH ============ -->
+<section>
+  <span class="tag">WHY THIS IS A BIG DEAL</span>
+  <h2>You get both</h2>
+  <div class="two-col" style="margin-top: 30px;">
+    <div class="vs-block glass">
+      <h3>From the tree</h3>
+      <ul class="tight" style="font-size: 0.7em; text-align: left;">
+        <li>Path traceability</li>
+        <li>Per-feature thresholds</li>
+        <li>Human-readable rules</li>
+      </ul>
+    </div>
+    <div class="vs-block" style="background: rgba(79, 195, 247, 0.1); border-color: #4FC3F7;">
+      <h3>From the network</h3>
+      <ul class="tight" style="font-size: 0.7em; text-align: left;">
+        <li>End-to-end training</li>
+        <li>Composable with other layers</li>
+        <li>Higher accuracy</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 16: WHY SAFETY-CRITICAL ============ -->
+<section>
+  <span class="tag">WHY THIS MATTERS FOR SAFETY-CRITICAL AI</span>
+  <h2>Three properties</h2>
+  <ol style="font-size: 0.8em; line-height: 1.6;">
+    <li><strong class="accent">Explainability</strong><br>
+      <span class="small">Every prediction comes with the path that produced it.</span></li>
+    <li><strong class="accent">Noise robustness</strong><br>
+      <span class="small">Soft splits are less brittle to small sensor perturbations than hard splits.</span></li>
+    <li><strong class="accent">Sensor failure tolerance</strong><br>
+      <span class="small">Channel-level dropout during training teaches the model to operate under partial sensor failure.</span></li>
+  </ol>
+  <p class="small" style="margin-top: 30px;">You'll see all three in the next 90 minutes.</p>
+</section>
+
+<!-- ============ SLIDE 17: PAPER NUMBERS ============ -->
+<section>
+  <span class="tag">FROM MY PAPER</span>
+  <h2>The numbers</h2>
+  <table>
+    <tr><th>Model</th><th>Clean RMSE</th><th>30% sensors missing</th><th>Explainable?</th></tr>
+    <tr><td>LSTM</td><td>15.49</td><td class="warn">+89% degradation</td><td>✗</td></tr>
+    <tr><td>Random Forest</td><td>18.07</td><td>n/a</td><td>partial</td></tr>
+    <tr class="highlight"><td><strong>Temporal Neural Tree</strong></td><td><strong>15.78</strong></td><td class="good"><strong>+17% degradation</strong></td><td><strong>✓</strong></td></tr>
+  </table>
+  <p style="font-size: 0.75em; margin-top: 30px;">
+    Within 0.3 RMSE of LSTM on clean data.<br>
+    <span class="accent">5x more robust under sensor failure.</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 18: NEURAL-TREES PACKAGE ============ -->
+<section>
+  <span class="tag">THE TOOL YOU'LL USE</span>
+  <h2 style="color: #4FC3F7;">neural-trees</h2>
+  <pre><code class="language-bash">pip install neural-trees</code></pre>
+  <ul class="tight" style="font-size: 0.7em;">
+    <li>Open source, MIT licensed</li>
+    <li>scikit-learn compatible API</li>
+    <li>PyTorch backend</li>
+    <li>Soft Decision Trees, Hierarchical Mixture of Experts, statistical model comparison</li>
+  </ul>
+  <p class="small" style="margin-top: 30px;">github.com/cgrtml/neural-trees</p>
+</section>
+
+<!-- ============ SLIDE 19: ACTIVITY 1 INTRO ============ -->
+<section data-background-color="#0a1a2a">
+  <span class="tag" style="background: #4FC3F7;">ACTIVITY 1 · 55 MIN</span>
+  <h2 style="font-size: 1.8em;">Train Your Own Neural Tree</h2>
+  <p class="center-emph">
+    Open the QR code on the next slide.<br>
+    No installs. Just Gmail and a browser.
+  </p>
+</section>
+
+<!-- ============ SLIDE 20: QR CODE FOR ACTIVITY 1 ============ -->
+<section data-background-color="#fff" style="color: #000;">
+  <h2 style="color: #000;">Scan to start</h2>
+  <div class="qr-block">
+    <img src="data:image/png;base64,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" alt="QR code" style="width: 400px; height: 400px;">
+  </div>
+  <p style="color: #000; font-size: 0.7em;">
+    <strong>github.com/cgrtml/wsu-workshop-may15</strong>
+  </p>
+  <p style="color: #555; font-size: 0.55em; margin-top: 20px;">
+    1. Scan with phone camera → 2. Tap "Activity 1" → 3. Sign in with Gmail → 4. "Copy to Drive"
+  </p>
+</section>
+
+<!-- ============ SLIDE 21: ACTIVITY 1 STEPS ============ -->
+<section>
+  <h2>Activity 1: what you will do</h2>
+  <ol style="font-size: 0.78em; line-height: 1.7;">
+    <li><strong>Load &amp; explore</strong> CMAPSS FD001 (10 min)<br>
+      <span class="small">Plot a few engines. Find which sensors degrade.</span></li>
+    <li><strong>Bin RUL into 3 classes</strong> (5 min)<br>
+      <span class="small">Critical · Caution · Healthy</span></li>
+    <li><strong>Train a SoftDecisionTree</strong> (15 min)<br>
+      <span class="small">depth=4, max_epochs=30, runs on CPU</span></li>
+    <li><strong>Evaluate accuracy &amp; confusion matrix</strong> (5 min)</li>
+    <li><strong>Traverse a prediction</strong> (15 min)<br>
+      <span class="accent">This is the heart of the workshop.</span></li>
+    <li><strong>Discussion</strong> (5 min)</li>
+  </ol>
+</section>
+
+<!-- ============ SLIDE A1-1: IMPORTS ============ -->
+<section class="step">
+  <span class="step-tag">STEP 1 / 11</span><h2 style="display:inline">Imports</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report, confusion_matrix
+from neural_trees import SoftDecisionTree
+print('All set.')</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">All set.</div>
+      <p class="step-hint">If you see IndentationError, every line must start at the left edge.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-2: LOAD DATA ============ -->
+<section class="step">
+  <span class="step-tag">STEP 2 / 11</span><h2 style="display:inline">Load the data</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">cols = ['engine_id', 'cycle'] + [f'op{i}' for i in range(1, 4)] + [f's{i}' for i in range(1, 22)]
+train = pd.read_csv('train_FD001.txt', sep=r'\s+', header=None, names=cols)
+print(train.shape, '-&gt;', train['engine_id'].nunique(), 'engines')
+train.head()</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">(20631, 26) -&gt; 100 engines
+
+[5 rows × 26 columns: engine_id,
+ cycle, op1-3, s1-21]</div>
+      <p class="step-hint">100 turbofan engines, 20,631 timesteps total.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-3: COMPUTE RUL ============ -->
+<section class="step">
+  <span class="step-tag">STEP 3 / 11</span><h2 style="display:inline">Compute Remaining Useful Life</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">max_cycles = train.groupby('engine_id')['cycle'].max().rename('max_cycle')
+train = train.merge(max_cycles, on='engine_id')
+train['RUL'] = (train['max_cycle'] - train['cycle']).clip(upper=125)
+train[['engine_id','cycle','max_cycle','RUL']].head()</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">   engine  cycle  max_cycle  RUL
+0       1      1        192  125
+1       1      2        192  125
+2       1      3        192  125
+3       1      4        192  125
+4       1      5        192  125</div>
+      <p class="step-hint">RUL capped at 125. Engine 1 lived 192 cycles total.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-4: PLOT ENGINE 1 ============ -->
+<section class="step">
+  <span class="step-tag">STEP 4 / 11</span><h2 style="display:inline">Visualize one engine's degradation</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">engine = train[train['engine_id'] == 1].set_index('cycle')
+engine[['s2','s7','s11','s14']].plot(
+    subplots=True, layout=(2,2), figsize=(12,6))
+plt.suptitle('Engine 1 — sensor degradation', y=1.02)
+plt.tight_layout(); plt.show()</div>
+      <p class="step-hint">s2, s11, s14 trend up. s7 trends down. The engine is wearing.</p>
+    </div>
+    <div class="step-out image-out">
+      <img src="img/step4_engine1.png" alt="engine 1 sensor trajectories">
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-5: BIN RUL ============ -->
+<section class="step">
+  <span class="step-tag">STEP 5 / 11</span><h2 style="display:inline">Bin RUL into three classes</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">def bin_rul(rul):
+    if rul &lt; 30: return 0   # Critical
+    elif rul &lt; 80: return 1 # Caution
+    return 2                  # Healthy
+
+train['health'] = train['RUL'].apply(bin_rul)
+train['health'].value_counts().sort_index()</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">health
+0     3000
+1     5000
+2    12631
+Name: count, dtype: int64</div>
+      <p class="step-hint">14% Critical · 24% Caution · 61% Healthy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-6: FEATURE MATRIX ============ -->
+<section class="step">
+  <span class="step-tag">STEP 6 / 11</span><h2 style="display:inline">Build the feature matrix</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">all_sensors = [f's{i}' for i in range(1, 22)]
+informative = [s for s in all_sensors if train[s].std() &gt; 0.001]
+X = train[informative].values
+y = train['health'].values
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+print('X shape:', X.shape, '· y shape:', y.shape)</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">X shape: (20631, 15) · y shape: (20631,)</div>
+      <p class="step-hint">15 of 21 sensors are informative. s1, s5, s10, s16, s18, s19 are constant — dropped.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-7: SPLIT ============ -->
+<section class="step">
+  <span class="step-tag">STEP 7 / 11</span><h2 style="display:inline">Train / test split</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    stratify=y,
+    random_state=42,
+)
+print(X_train.shape, X_test.shape)</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">(16504, 15) (4127, 15)</div>
+      <p class="step-hint">80/20 split. stratify=y preserves the 14/24/62 class ratio in both sets.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-8: TRAIN SDT ============ -->
+<section class="step">
+  <span class="step-tag">STEP 8 / 11</span><h2 style="display:inline">Train the Soft Decision Tree (30 to 60 sec)</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">tree = SoftDecisionTree(
+    depth=4,
+    max_epochs=30,
+    learning_rate=0.01,
+    penalty_coef=1e-3,
+    verbose=True,
+)
+tree.fit(X_train, y_train)
+acc = (tree.predict(X_test) == y_test).mean()
+print(f'Test accuracy: {acc:.3f}')</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">Epoch 5/30   loss=0.362  acc=0.851
+Epoch 10/30  loss=0.355  acc=0.853
+Epoch 15/30  loss=0.352  acc=0.854
+Epoch 20/30  loss=0.351  acc=0.855
+Epoch 25/30  loss=0.350  acc=0.854
+Epoch 30/30  loss=0.349  acc=0.855
+Test accuracy: 0.841</div>
+      <p class="step-hint">Train vs test gap ≈ 1 point. No overfitting.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-9: CONFUSION MATRIX ============ -->
+<section class="step">
+  <span class="step-tag">STEP 9 / 11</span><h2 style="display:inline">Confusion matrix and per-class report</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">labels = ['Critical', 'Caution', 'Healthy']
+y_pred = tree.predict(X_test)
+cm = confusion_matrix(y_test, y_pred)
+fig, ax = plt.subplots(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=labels, yticklabels=labels, ax=ax)
+plt.title('Confusion matrix'); plt.show()
+print(classification_report(y_test, y_pred,
+      target_names=labels))</div>
+      <p class="step-hint">0 false-Criticals on Healthy engines. Only 5 missed-Critical on 600.</p>
+    </div>
+    <div class="step-out image-out">
+      <img src="img/step9_confusion.png" alt="confusion matrix">
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-10: SPLIT WEIGHTS ============ -->
+<section class="step">
+  <span class="step-tag">STEP 10 / 11</span><h2 style="display:inline">Which sensor does each node lean on?</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">splits = tree.get_split_weights()
+print(f'Internal nodes: {len(splits)}')
+for i, w in enumerate(splits):
+    dom = informative[np.argmax(np.abs(w))]
+    print(f'  Node {i:2d} -&gt; {dom:4s}')</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">Internal nodes: 15
+  Node  0 -&gt; s7
+  Node  1 -&gt; s14
+  Node  2 -&gt; s6
+  Node  3 -&gt; s14
+  Node  4 -&gt; s6
+  Node  5 -&gt; s6
+  Node  6 -&gt; s12
+  ...</div>
+      <p class="step-hint">s14 and s6 dominate multiple nodes. These are the model's pillars.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A1-11: TRAVERSE PREDICTION ============ -->
+<section class="step">
+  <span class="step-tag">STEP 11 / 11</span><h2 style="display:inline">Read one prediction (the heart of the workshop)</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">idx = 17
+x = X_test[idx]
+true = labels[y_test[idx]]
+pred = labels[tree.predict([x])[0]]
+proba = tree.predict_proba([x])[0]
+root = informative[np.argmax(np.abs(splits[0]))]
+
+print(f'True class:      {true}')
+print(f'Predicted class: {pred}')
+print(f'Probabilities:   '
+      f'Critical={proba[0]:.3f} '
+      f'Caution={proba[1]:.3f} '
+      f'Healthy={proba[2]:.3f}')
+print(f'Root sensor:     {root}')</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">True class:      Caution
+Predicted class: Healthy
+Probabilities:   Critical=0.000
+                 Caution=0.148
+                 Healthy=0.852
+Root sensor:     s7</div>
+      <p class="step-hint">You can defend this prediction to a regulator. An LSTM cannot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 25: CHECKPOINT ============ -->
+<section data-background-color="#0a1a0a">
+  <h2 class="good">Checkpoint</h2>
+  <p style="font-size: 0.85em;">By 10:50 you should have:</p>
+  <ul class="tight" style="font-size: 0.8em;">
+    <li>✓ A trained SoftDecisionTree on FD001</li>
+    <li>✓ Test accuracy &gt; 80%</li>
+    <li>✓ A printed decision path for at least one engine</li>
+  </ul>
+  <p class="center-emph" style="margin-top: 40px;">
+    ☕ 10-minute break.<br>
+    <span class="small">Activity 2 (team competition) starts at 11:00.</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 26: ACTIVITY 2 INTRO ============ -->
+<section data-background-color="#1a0a1a">
+  <span class="tag" style="background: #BA68C8;">ACTIVITY 2 · 25 MIN · TEAM CHALLENGE</span>
+  <h2 style="font-size: 1.8em;">Sensor Fault Detection</h2>
+  <p class="center-emph">
+    One of engine 17's sensors is reporting bad data.<br>
+    <span class="accent">Which sensor, and can your model tell you why?</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 27: SCENARIO ============ -->
+<section>
+  <h2>The scenario</h2>
+  <p style="font-size: 0.8em; line-height: 1.6;">
+    You are the data science team at an airline. Maintenance ops sends you three suspicious test files for the same engine:
+  </p>
+  <blockquote style="border-left: 4px solid #FFB74D; padding: 16px 24px; margin: 30px 0; background: rgba(255, 183, 77, 0.08); font-size: 0.78em;">
+    "Something is wrong with engine 17. The pattern looks like a sensor drift, a frozen sensor, or noise spikes, but we cannot tell which channel is at fault. <strong>Localize the faulty sensor before the next flight.</strong>"
+  </blockquote>
+  <p style="font-size: 0.78em;">You have two models in production:</p>
+  <ul class="tight" style="font-size: 0.75em;">
+    <li>Your <strong>SoftDecisionTree</strong> from Activity 1, explainable</li>
+    <li>A <strong>RandomForest</strong> baseline, accurate but opaque</li>
+  </ul>
+  <p class="small" style="margin-top: 20px;">
+    The same technique works for hardware failures and for adversarial attacks. Both manifest as anomalous sensor patterns the model has to flag.
+  </p>
+</section>
+
+<!-- ============ SLIDE 28: TEAMS ============ -->
+<section>
+  <h2>Teams</h2>
+  <ul class="tight" style="font-size: 0.85em;">
+    <li>Form groups of <strong>3 to 4 students</strong></li>
+    <li>Use the same notebook within your team</li>
+    <li>You have <strong>17 minutes</strong> for analysis</li>
+    <li>Then we collect answers</li>
+  </ul>
+  <p class="center-emph" style="font-size: 1.1em; margin-top: 40px;">
+    First team to correctly identify all three attacks wins.
+  </p>
+</section>
+
+<!-- ============ SLIDE 29: THE 3 ATTACKS ============ -->
+<section>
+  <h2>Three attack files</h2>
+  <table>
+    <tr><th>File</th><th>Attack type</th><th>Your job</th></tr>
+    <tr><td><code>attack_A.csv</code></td><td>Drift (constant offset)</td><td>Which sensor?</td></tr>
+    <tr><td><code>attack_B.csv</code></td><td>Stuck-at (frozen value)</td><td>Which sensor?</td></tr>
+    <tr><td><code>attack_C.csv</code></td><td>Gaussian noise injection</td><td>Which sensor?</td></tr>
+  </table>
+  <p style="font-size: 0.75em; margin-top: 30px;">
+    Each file is a copy of clean engine 17 data, but one sensor channel has been manipulated.
+  </p>
+</section>
+
+<!-- ============ SLIDE A2-1: RF BASELINE ============ -->
+<section class="step">
+  <span class="step-tag a2">STEP 1 / 7</span><h2 style="display:inline">Add a RandomForest baseline</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">from sklearn.ensemble import RandomForestClassifier
+rf = RandomForestClassifier(
+    n_estimators=100, random_state=42
+).fit(X_train, y_train)
+
+print(f'SoftTree accuracy: '
+      f'{(tree.predict(X_test) == y_test).mean():.3f}')
+print(f'RandomForest      : '
+      f'{(rf.predict(X_test) == y_test).mean():.3f}')</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">SoftTree accuracy: 0.841
+RandomForest      : 0.843</div>
+      <p class="step-hint">Two models, nearly identical accuracy. One is explainable. One is not.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A2-2: CLEAN BASELINE ============ -->
+<section class="step">
+  <span class="step-tag a2">STEP 2 / 7</span><h2 style="display:inline">Predict on clean engine 17</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">clean = pd.read_csv('engine17_clean.csv')
+Xc = scaler.transform(clean[informative].values)
+clean_tree_pred = tree.predict(Xc)
+clean_rf_pred = rf.predict(Xc)
+
+print(f'Engine 17 clean: {len(Xc)} cycles')
+print(f'Tree vs RF agreement: '
+      f'{(clean_tree_pred == clean_rf_pred).mean():.2f}')</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">Engine 17 clean: 276 cycles
+Tree vs RF agreement: 0.95</div>
+      <p class="step-hint">95% agreement on clean data. The two models say roughly the same thing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A2-3: SCORE ATTACKS ============ -->
+<section class="step">
+  <span class="step-tag a2">STEP 3 / 7</span><h2 style="display:inline">How much did each attack move the predictions?</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this (three blocks, one per file)</h4>
+      <div class="step-code">for fname in ['attack_A.csv', 'attack_B.csv', 'attack_C.csv']:
+    df = pd.read_csv(fname)
+    Xa = scaler.transform(df[informative].values)
+    pt = tree.predict(Xa)
+    pr = rf.predict(Xa)
+    print(f'{fname}: '
+          f'Tree changed {(pt != clean_tree_pred).sum():3d}/{len(pt)} | '
+          f'RF changed {(pr != clean_rf_pred).sum():3d}/{len(pr)}')</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">attack_A.csv: Tree  18/276 | RF  14/276
+attack_B.csv: Tree  33/276 | RF   8/276
+attack_C.csv: Tree   8/276 | RF   1/276</div>
+      <p class="step-hint">Attack C: RF changed at only 1 cycle. It is missing the attack. The Soft Tree caught 8.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A2-4: ATTACK A ============ -->
+<section class="step">
+  <span class="step-tag a2">STEP 4 / 7</span><h2 style="display:inline">Attack A — look for two parallel lines</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">clean = pd.read_csv('engine17_clean.csv')
+attack = pd.read_csv('attack_A.csv')
+fig, axes = plt.subplots(4, 4, figsize=(16, 10))
+for ax, s in zip(axes.flat, informative):
+    ax.plot(clean['cycle'], clean[s],
+            label='clean', alpha=0.7)
+    ax.plot(attack['cycle'], attack[s],
+            label='attack', alpha=0.7)
+    ax.set_title(s)
+axes.flat[0].legend()
+plt.tight_layout(); plt.show()</div>
+      <p class="step-hint">One sensor shows the orange line shifted up by a constant offset. That is <strong>drift</strong>.<br>
+      <span class="accent">Answer: s11 — drift.</span></p>
+    </div>
+    <div class="step-out image-out">
+      <img src="img/attack_A.png" alt="attack A overlay">
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A2-5: ATTACK B ============ -->
+<section class="step">
+  <span class="step-tag a2">STEP 5 / 7</span><h2 style="display:inline">Attack B — look for a flat horizontal line</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">attack = pd.read_csv('attack_B.csv')
+fig, axes = plt.subplots(4, 4, figsize=(16, 10))
+for ax, s in zip(axes.flat, informative):
+    ax.plot(clean['cycle'], clean[s],
+            label='clean', alpha=0.7)
+    ax.plot(attack['cycle'], attack[s],
+            label='attack', alpha=0.7)
+    ax.set_title(s)
+axes.flat[0].legend()
+plt.tight_layout(); plt.show()</div>
+      <p class="step-hint">One sensor's orange line is flat while blue rises. <strong>Stuck-at</strong>.<br>
+      <span class="accent">Answer: s14 — stuck-at.</span></p>
+    </div>
+    <div class="step-out image-out">
+      <img src="img/attack_B.png" alt="attack B overlay">
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A2-6: ATTACK C ============ -->
+<section class="step">
+  <span class="step-tag a2">STEP 6 / 7</span><h2 style="display:inline">Attack C — look for a noisier line</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">attack = pd.read_csv('attack_C.csv')
+fig, axes = plt.subplots(4, 4, figsize=(16, 10))
+for ax, s in zip(axes.flat, informative):
+    ax.plot(clean['cycle'], clean[s],
+            label='clean', alpha=0.7)
+    ax.plot(attack['cycle'], attack[s],
+            label='attack', alpha=0.7)
+    ax.set_title(s)
+axes.flat[0].legend()
+plt.tight_layout(); plt.show()</div>
+      <p class="step-hint">Same trend, much higher variance. <strong>Noise injection</strong>.<br>
+      <span class="accent">Answer: s9 — noise.</span></p>
+    </div>
+    <div class="step-out image-out">
+      <img src="img/attack_C.png" alt="attack C overlay">
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE A2-7: QUANTIFY ============ -->
+<section class="step">
+  <span class="step-tag a2">STEP 7 / 7</span><h2 style="display:inline">Quantify the divergence</h2>
+  <div class="step-card">
+    <div>
+      <h4>Paste this</h4>
+      <div class="step-code">for fname in ['attack_A.csv', 'attack_B.csv', 'attack_C.csv']:
+    a = pd.read_csv(fname)
+    d = {s: float(np.mean(np.abs(clean[s].values - a[s].values)))
+         for s in informative}
+    top = sorted(d.items(), key=lambda kv: -kv[1])[:3]
+    print(f'{fname} top 3: {top}')</div>
+    </div>
+    <div>
+      <h4>You should see</h4>
+      <div class="step-out">attack_A: [('s11', 0.367), ('s2', 0.0), ('s3', 0.0)]
+attack_B: [('s14', 19.89), ('s2', 0.0), ('s3', 0.0)]
+attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
+      <p class="step-hint">Numbers confirm the visual answer. Only one sensor differs in each file.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 31: TIME ON CLOCK ============ -->
+<section data-background-color="#100a1a">
+  <h2 style="font-size: 2em;">⏱ 17 minutes</h2>
+  <p class="center-emph">
+    Open <code>activity2_student.ipynb</code><br>
+    Run cells. Discuss as a team. Pick your answers.
+  </p>
+  <p class="small">I will come around with hints, but I will not give you the answer.</p>
+</section>
+
+<!-- ============ SLIDE 32: ANSWERS ============ -->
+<section>
+  <h2>Answers</h2>
+  <table>
+    <tr><th>Attack</th><th>Sensor</th><th>Type</th></tr>
+    <tr><td>A</td><td>Sensor 11 (Ps30)</td><td>Drift</td></tr>
+    <tr><td>B</td><td>Sensor 14 (NRc)</td><td>Stuck-at</td></tr>
+    <tr><td>C</td><td>Sensor 9 (Nc)</td><td>Gaussian noise</td></tr>
+  </table>
+  <p class="center-emph" style="margin-top: 50px;">
+    Which team got all three? 🏆
+  </p>
+</section>
+
+<!-- ============ SLIDE 33: WHAT JUST HAPPENED ============ -->
+<section>
+  <h2>What just happened</h2>
+  <ul class="tight" style="font-size: 0.78em;">
+    <li>The <strong>RandomForest</strong> changed its prediction, but could not tell you <span class="warn">why</span>.</li>
+    <li>The <strong>SoftDecisionTree's split weights</strong> shifted in a sensor-specific way.</li>
+    <li>That shift <em>is</em> the explanation. It's a fingerprint of which sensor the model is leaning on.</li>
+  </ul>
+  <p class="center-emph" style="margin-top: 40px; font-size: 1.1em;">
+    Explainability didn't just make the model auditable.<br>
+    <span class="accent">It made the model a debugging tool for the system around it.</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 33B: GITHUB SPRINT INTRO ============ -->
+<section data-background-color="#0a1a0a">
+  <span class="tag" style="background: #81C784;">SPRINT · 15 MIN</span>
+  <h2 style="font-size: 1.8em;">🔧 GitHub Contribution Sprint</h2>
+  <p class="center-emph">
+    Walk out of this room with a real open-source contribution<br>
+    on your GitHub profile.
+  </p>
+  <p class="small" style="margin-top: 30px;">15 minutes. Your name on a published ML library.</p>
+</section>
+
+<!-- ============ SLIDE 33C: SPRINT MECHANICS ============ -->
+<section>
+  <h2>How it works</h2>
+  <ol style="font-size: 0.78em; line-height: 1.7;">
+    <li>Open <strong>github.com/cgrtml/neural-trees</strong> → <em>Issues</em> tab</li>
+    <li>Filter by the label <code>good first issue</code> and pick one with a 10 to 20 minute scope</li>
+    <li>Comment "I'm taking this" so no duplicates</li>
+    <li>Fork the repo, edit, open a PR</li>
+    <li>I will review live. Simple PRs get merged on the spot.</li>
+  </ol>
+  <p class="center-emph" style="margin-top: 30px; font-size: 1em;">
+    20+ issues waiting · pick what fits your level
+  </p>
+</section>
+
+<!-- ============ SLIDE 33D: WHY DO IT ============ -->
+<section>
+  <h2>Why this is worth your 15 minutes</h2>
+  <ul class="tight" style="font-size: 0.78em; line-height: 1.6;">
+    <li><strong>A concrete open-source contribution</strong> on your profile, visible to recruiters, internships, and grad-school admissions.</li>
+    <li>You become part of a published Python ML library (PyPI: <code>neural-trees</code>).</li>
+    <li><strong>Your name goes in the README.</strong> I will add a "WSU Workshop Contributors" section listing every merged PR.</li>
+    <li>It is real proof that you can collaborate on a codebase, not just clone tutorials.</li>
+  </ul>
+  <p class="center-emph" style="margin-top: 40px;">
+    <span class="accent">Open the repo. Pick an issue. Go.</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 34: EU AI ACT ============ -->
+<section>
+  <span class="tag warn" style="background: #FFB74D;">REGULATORY CONTEXT</span>
+  <h2>The EU AI Act</h2>
+  <p style="font-size: 0.78em;">
+    Took effect in 2025. Applies to any AI system serving EU customers.
+  </p>
+  <p style="font-size: 0.78em; margin-top: 20px;">
+    For "high-risk" systems (predictive maintenance for aviation qualifies):
+  </p>
+  <ul class="tight" style="font-size: 0.72em;">
+    <li>Article 13: <strong>Transparency &amp; explanation</strong> requirements</li>
+    <li>Article 14: <strong>Human oversight</strong> with meaningful interpretation</li>
+    <li>Article 15: <strong>Robustness</strong> against adversarial inputs and faults</li>
+  </ul>
+  <p class="small" style="margin-top: 25px;">Same direction in the US: SR 11-7 (banking), FDA SaMD, FAA AC 25-1309.</p>
+</section>
+
+<!-- ============ SLIDE 35: WRAPPING UP ============ -->
+<section data-background-color="#0a1a0a">
+  <span class="tag" style="background: #81C784;">WRAP-UP · 5 MIN</span>
+  <h2>What you walk out with</h2>
+  <ol style="font-size: 0.8em; line-height: 1.7; margin-top: 30px;">
+    <li><span class="accent">Explainability is mandatory in safety-critical AI.</span><br>
+      <span class="small">Required by EU AI Act, FDA, FAA, OCC for high-risk systems.</span></li>
+    <li><span class="accent">Soft Decision Trees give you both worlds.</span><br>
+      <span class="small">Neural-network accuracy with tree-level interpretability.</span></li>
+    <li><span class="accent">You ran this yourself, on real NASA data.</span><br>
+      <span class="small">Trained a model · localized a sensor fault · maybe shipped an OSS contribution.</span></li>
+  </ol>
+</section>
+
+<!-- ============ SLIDE 36: CAREER BRIDGE ============ -->
+<section>
+  <h2>Where this is going</h2>
+  <p style="font-size: 0.78em; line-height: 1.6;">
+    Banks (Model Risk Management), insurers, healthcare, aerospace.
+    Every regulated industry needs explainable AI.
+  </p>
+  <p style="font-size: 0.78em; margin-top: 20px;">
+    My company <strong>Hezarfen</strong> builds compliance-ready AI for US mid-market banks under SR 11-7 and the EU AI Act.
+  </p>
+  <p class="center-emph" style="margin-top: 50px; font-size: 1em;">
+    If any of this interested you, whether as a thesis topic, an open-source contribution, or just a conversation,
+    <span class="accent">reach out.</span>
+  </p>
+</section>
+
+<!-- ============ SLIDE 37: LINKS ============ -->
+<section>
+  <h2>Stay in touch</h2>
+  <div style="margin-top: 40px; text-align: center;">
+    <h3 style="color: #4FC3F7;">Cagri Temel</h3>
+    <p class="small">Hezarfen LLC · IEEE Senior Member</p>
+    <p class="big-link" style="font-size: 1em; margin-top: 24px;">github.com/cgrtml/neural-trees</p>
+    <p class="big-link" style="font-size: 1em;">linkedin.com/in/cagritemel</p>
+  </div>
+  <p class="small" style="margin-top: 50px;">
+    Workshop materials: <strong>github.com/cgrtml/wsu-workshop-may15</strong>
+  </p>
+</section>
+
+<!-- ============ SLIDE 38: THANK YOU ============ -->
+<section data-background-color="#0a0a0a">
+  <h1 style="font-size: 2.5em;">Thank you</h1>
+  <p class="center-emph">
+    To <strong>Dr. Sergey Lapin</strong> and <strong>Jeremy</strong><br>
+    for the invitation.
+  </p>
+  <p style="font-size: 0.7em; margin-top: 60px; color: #888;">
+    Questions? We'll stay 5 minutes after.
+  </p>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    controls: true,
+    progress: true,
+    transition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes ]
+  });
+</script>
+</body>
+</html>
