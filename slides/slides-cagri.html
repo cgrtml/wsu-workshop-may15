@@ -126,11 +126,12 @@
   }
   .step-card {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     gap: 22px;
     margin-top: 14px;
     text-align: left;
   }
+  .step-card > div { min-width: 0; }
   .step-card h4 {
     font-size: 0.55em;
     color: #4FC3F7;
@@ -144,12 +145,17 @@
     padding: 14px 16px;
     border-radius: 6px;
     font-family: "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.42em;
-    line-height: 1.5;
+    font-size: 0.40em;
+    line-height: 1.45;
     color: #E0E0E0;
     white-space: pre;
     overflow-x: auto;
+    overflow-y: hidden;
     border: 1px solid #2a2a2a;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
   }
   .step-card .step-out {
     background: #0e1d0e;
@@ -157,10 +163,16 @@
     padding: 14px 16px;
     border-radius: 6px;
     font-family: "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.46em;
-    line-height: 1.5;
+    font-size: 0.42em;
+    line-height: 1.45;
     color: #D8E8D8;
-    white-space: pre-wrap;
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
   }
   .step-card .step-out.image-out {
     padding: 6px;
@@ -173,7 +185,7 @@
     display: block;
   }
   .step-card.image-card {
-    grid-template-columns: 1fr 1.7fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
   }
   .step-card.image-card .step-code {
     font-size: 0.38em;
@@ -200,9 +212,16 @@
     margin-top: 10px;
     font-style: italic;
   }
+  section.step {
+    font-size: 0.95em;
+  }
   section.step h2 {
-    font-size: 1.0em;
-    margin-bottom: 6px;
+    font-size: 0.85em;
+    margin: 6px 0 2px 0;
+    line-height: 1.2;
+  }
+  section.step .step-tag {
+    margin-bottom: 0;
   }
 </style>
 </head>
@@ -553,7 +572,7 @@ R²: 0.855</code></pre>
 
 <!-- ============ SLIDE A1-1: IMPORTS ============ -->
 <section class="step">
-  <span class="step-tag">STEP 1 / 11</span><h2 style="display:inline">Imports</h2>
+  <span class="step-tag">STEP 1 / 11</span><h2>Imports</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -577,7 +596,7 @@ print('All set.')</div>
 
 <!-- ============ SLIDE A1-2: LOAD DATA ============ -->
 <section class="step">
-  <span class="step-tag">STEP 2 / 11</span><h2 style="display:inline">Load the data</h2>
+  <span class="step-tag">STEP 2 / 11</span><h2>Load the data</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -603,7 +622,7 @@ train.head()</div>
 
 <!-- ============ SLIDE A1-3: COMPUTE RUL ============ -->
 <section class="step">
-  <span class="step-tag">STEP 3 / 11</span><h2 style="display:inline">Compute Remaining Useful Life</h2>
+  <span class="step-tag">STEP 3 / 11</span><h2>Compute Remaining Useful Life</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -627,7 +646,7 @@ train[['engine_id','cycle','max_cycle','RUL']].head()</div>
 
 <!-- ============ SLIDE A1-4: PLOT ENGINE 1 ============ -->
 <section class="step">
-  <span class="step-tag">STEP 4 / 11</span><h2 style="display:inline">Visualize one engine's degradation</h2>
+  <span class="step-tag">STEP 4 / 11</span><h2>Visualize one engine's degradation</h2>
   <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
@@ -646,7 +665,7 @@ plt.tight_layout(); plt.show()</div>
 
 <!-- ============ SLIDE A1-5: BIN RUL ============ -->
 <section class="step">
-  <span class="step-tag">STEP 5 / 11</span><h2 style="display:inline">Bin RUL into three classes</h2>
+  <span class="step-tag">STEP 5 / 11</span><h2>Bin RUL into three classes</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -672,7 +691,7 @@ Name: count, dtype: int64</div>
 
 <!-- ============ SLIDE A1-6: FEATURE MATRIX ============ -->
 <section class="step">
-  <span class="step-tag">STEP 6 / 11</span><h2 style="display:inline">Build the feature matrix</h2>
+  <span class="step-tag">STEP 6 / 11</span><h2>Build the feature matrix</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -694,7 +713,7 @@ print('X shape:', X.shape, '· y shape:', y.shape)</div>
 
 <!-- ============ SLIDE A1-7: SPLIT ============ -->
 <section class="step">
-  <span class="step-tag">STEP 7 / 11</span><h2 style="display:inline">Train / test split</h2>
+  <span class="step-tag">STEP 7 / 11</span><h2>Train / test split</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -716,7 +735,7 @@ print(X_train.shape, X_test.shape)</div>
 
 <!-- ============ SLIDE A1-8: TRAIN SDT ============ -->
 <section class="step">
-  <span class="step-tag">STEP 8 / 11</span><h2 style="display:inline">Train the Soft Decision Tree (30 to 60 sec)</h2>
+  <span class="step-tag">STEP 8 / 11</span><h2>Train the Soft Decision Tree (30 to 60 sec)</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -747,7 +766,7 @@ Test accuracy: 0.841</div>
 
 <!-- ============ SLIDE A1-9: CONFUSION MATRIX ============ -->
 <section class="step">
-  <span class="step-tag">STEP 9 / 11</span><h2 style="display:inline">Confusion matrix and per-class report</h2>
+  <span class="step-tag">STEP 9 / 11</span><h2>Confusion matrix and per-class report</h2>
   <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
@@ -770,7 +789,7 @@ print(classification_report(y_test, y_pred,
 
 <!-- ============ SLIDE A1-10: SPLIT WEIGHTS ============ -->
 <section class="step">
-  <span class="step-tag">STEP 10 / 11</span><h2 style="display:inline">Which sensor does each node lean on?</h2>
+  <span class="step-tag">STEP 10 / 11</span><h2>Which sensor does each node lean on?</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -798,7 +817,7 @@ for i, w in enumerate(splits):
 
 <!-- ============ SLIDE A1-11: TRAVERSE PREDICTION ============ -->
 <section class="step">
-  <span class="step-tag">STEP 11 / 11</span><h2 style="display:inline">Read one prediction (the heart of the workshop)</h2>
+  <span class="step-tag">STEP 11 / 11</span><h2>Read one prediction (the heart of the workshop)</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -904,7 +923,7 @@ Root sensor:     s7</div>
 
 <!-- ============ SLIDE A2-1: RF BASELINE ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 1 / 7</span><h2 style="display:inline">Add a RandomForest baseline</h2>
+  <span class="step-tag a2">STEP 1 / 7</span><h2>Add a RandomForest baseline</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -929,7 +948,7 @@ RandomForest      : 0.843</div>
 
 <!-- ============ SLIDE A2-2: CLEAN BASELINE ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 2 / 7</span><h2 style="display:inline">Predict on clean engine 17</h2>
+  <span class="step-tag a2">STEP 2 / 7</span><h2>Predict on clean engine 17</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
@@ -953,7 +972,7 @@ Tree vs RF agreement: 0.95</div>
 
 <!-- ============ SLIDE A2-3: SCORE ATTACKS ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 3 / 7</span><h2 style="display:inline">How much did each attack move the predictions?</h2>
+  <span class="step-tag a2">STEP 3 / 7</span><h2>How much did each attack move the predictions?</h2>
   <div class="step-card">
     <div>
       <h4>Paste this (three blocks, one per file)</h4>
@@ -978,7 +997,7 @@ attack_C.csv: Tree   8/276 | RF   1/276</div>
 
 <!-- ============ SLIDE A2-4: ATTACK A ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 4 / 7</span><h2 style="display:inline">Attack A. Look for two parallel lines</h2>
+  <span class="step-tag a2">STEP 4 / 7</span><h2>Attack A. Look for two parallel lines</h2>
   <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
@@ -1004,7 +1023,7 @@ plt.tight_layout(); plt.show()</div>
 
 <!-- ============ SLIDE A2-5: ATTACK B ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 5 / 7</span><h2 style="display:inline">Attack B. Look for a flat horizontal line</h2>
+  <span class="step-tag a2">STEP 5 / 7</span><h2>Attack B. Look for a flat horizontal line</h2>
   <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
@@ -1029,7 +1048,7 @@ plt.tight_layout(); plt.show()</div>
 
 <!-- ============ SLIDE A2-6: ATTACK C ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 6 / 7</span><h2 style="display:inline">Attack C. Look for a noisier line</h2>
+  <span class="step-tag a2">STEP 6 / 7</span><h2>Attack C. Look for a noisier line</h2>
   <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
@@ -1054,7 +1073,7 @@ plt.tight_layout(); plt.show()</div>
 
 <!-- ============ SLIDE A2-7: QUANTIFY ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 7 / 7</span><h2 style="display:inline">Quantify the divergence</h2>
+  <span class="step-tag a2">STEP 7 / 7</span><h2>Quantify the divergence</h2>
   <div class="step-card">
     <div>
       <h4>Paste this</h4>
