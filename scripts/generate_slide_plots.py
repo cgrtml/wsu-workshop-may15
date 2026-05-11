@@ -59,18 +59,25 @@ tree = SoftDecisionTree(depth=4, max_epochs=30, learning_rate=0.01, penalty_coef
 tree.fit(X_tr, y_tr)
 rf = RandomForestClassifier(n_estimators=100, random_state=42).fit(X_tr, y_tr)
 
-# --- Plot 2: Confusion matrix ---
+# --- Plot 2: Confusion matrix (dark facecolor to match slide) ---
 labels = ['Critical', 'Caution', 'Healthy']
 y_pred = tree.predict(X_te)
 cm = confusion_matrix(y_te, y_pred)
-fig, ax = plt.subplots(figsize=(6, 5))
+fig, ax = plt.subplots(figsize=(7, 5.5))
+fig.patch.set_facecolor('#0a0a0a')
+ax.set_facecolor('#1a1a1a')
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
             xticklabels=labels, yticklabels=labels, ax=ax,
-            cbar_kws={'shrink': 0.7})
-ax.set_xlabel('Predicted'); ax.set_ylabel('True')
-ax.set_title('Soft Decision Tree on CMAPSS FD001')
+            cbar_kws={'shrink': 0.7},
+            annot_kws={'color': '#FFF', 'size': 14})
+ax.set_xlabel('Predicted', color='#EEE'); ax.set_ylabel('True', color='#EEE')
+ax.set_title('Soft Decision Tree on CMAPSS FD001', color='#EEE')
+ax.tick_params(colors='#BBB')
+cbar = ax.collections[0].colorbar
+cbar.ax.yaxis.set_tick_params(color='#BBB')
+plt.setp(plt.getp(cbar.ax.axes, 'yticklabels'), color='#BBB')
 plt.tight_layout()
-plt.savefig(os.path.join(OUT, 'step9_confusion.png'), dpi=110, bbox_inches='tight')
+plt.savefig(os.path.join(OUT, 'step9_confusion.png'), dpi=110, bbox_inches='tight', facecolor='#0a0a0a')
 plt.close()
 print('Saved: step9_confusion.png')
 

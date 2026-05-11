@@ -172,6 +172,16 @@
     border-radius: 4px;
     display: block;
   }
+  .step-card.image-card {
+    grid-template-columns: 1fr 1.7fr;
+  }
+  .step-card.image-card .step-code {
+    font-size: 0.38em;
+    line-height: 1.4;
+  }
+  .step-card.image-card .step-hint {
+    font-size: 0.44em;
+  }
   .step-tag {
     display: inline-block;
     background: #4FC3F7;
@@ -580,8 +590,12 @@ train.head()</div>
       <h4>You should see</h4>
       <div class="step-out">(20631, 26) -&gt; 100 engines
 
-[5 rows × 26 columns: engine_id,
- cycle, op1-3, s1-21]</div>
+   engine_id  cycle  op1  op2  s2  ...  s21
+0          1      1  0.0  0.0 642 ... 23.42
+1          1      2  0.0  0.0 642 ... 23.42
+2          1      3  0.0  0.0 642 ... 23.34
+3          1      4  0.0  0.0 642 ... 23.37
+4          1      5  0.0  0.0 642 ... 23.40</div>
       <p class="step-hint">100 turbofan engines, 20,631 timesteps total.</p>
     </div>
   </div>
@@ -600,13 +614,13 @@ train[['engine_id','cycle','max_cycle','RUL']].head()</div>
     </div>
     <div>
       <h4>You should see</h4>
-      <div class="step-out">   engine  cycle  max_cycle  RUL
-0       1      1        192  125
-1       1      2        192  125
-2       1      3        192  125
-3       1      4        192  125
-4       1      5        192  125</div>
-      <p class="step-hint">RUL capped at 125. Engine 1 lived 192 cycles total.</p>
+      <div class="step-out">   engine_id  cycle  max_cycle  RUL
+0          1      1        192  125
+1          1      2        192  125
+2          1      3        192  125
+3          1      4        192  125
+4          1      5        192  125</div>
+      <p class="step-hint">RUL capped at 125. Engine 1 lived 192 cycles in total.</p>
     </div>
   </div>
 </section>
@@ -614,13 +628,13 @@ train[['engine_id','cycle','max_cycle','RUL']].head()</div>
 <!-- ============ SLIDE A1-4: PLOT ENGINE 1 ============ -->
 <section class="step">
   <span class="step-tag">STEP 4 / 11</span><h2 style="display:inline">Visualize one engine's degradation</h2>
-  <div class="step-card">
+  <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
       <div class="step-code">engine = train[train['engine_id'] == 1].set_index('cycle')
 engine[['s2','s7','s11','s14']].plot(
     subplots=True, layout=(2,2), figsize=(12,6))
-plt.suptitle('Engine 1 — sensor degradation', y=1.02)
+plt.suptitle('Engine 1 sensor degradation', y=1.02)
 plt.tight_layout(); plt.show()</div>
       <p class="step-hint">s2, s11, s14 trend up. s7 trends down. The engine is wearing.</p>
     </div>
@@ -673,7 +687,7 @@ print('X shape:', X.shape, '· y shape:', y.shape)</div>
     <div>
       <h4>You should see</h4>
       <div class="step-out">X shape: (20631, 15) · y shape: (20631,)</div>
-      <p class="step-hint">15 of 21 sensors are informative. s1, s5, s10, s16, s18, s19 are constant — dropped.</p>
+      <p class="step-hint">15 of 21 sensors are informative. s1, s5, s10, s16, s18, s19 are constant and dropped.</p>
     </div>
   </div>
 </section>
@@ -734,7 +748,7 @@ Test accuracy: 0.841</div>
 <!-- ============ SLIDE A1-9: CONFUSION MATRIX ============ -->
 <section class="step">
   <span class="step-tag">STEP 9 / 11</span><h2 style="display:inline">Confusion matrix and per-class report</h2>
-  <div class="step-card">
+  <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
       <div class="step-code">labels = ['Critical', 'Caution', 'Healthy']
@@ -964,8 +978,8 @@ attack_C.csv: Tree   8/276 | RF   1/276</div>
 
 <!-- ============ SLIDE A2-4: ATTACK A ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 4 / 7</span><h2 style="display:inline">Attack A — look for two parallel lines</h2>
-  <div class="step-card">
+  <span class="step-tag a2">STEP 4 / 7</span><h2 style="display:inline">Attack A. Look for two parallel lines</h2>
+  <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
       <div class="step-code">clean = pd.read_csv('engine17_clean.csv')
@@ -980,7 +994,7 @@ for ax, s in zip(axes.flat, informative):
 axes.flat[0].legend()
 plt.tight_layout(); plt.show()</div>
       <p class="step-hint">One sensor shows the orange line shifted up by a constant offset. That is <strong>drift</strong>.<br>
-      <span class="accent">Answer: s11 — drift.</span></p>
+      <span class="accent">Answer: s11 (drift).</span></p>
     </div>
     <div class="step-out image-out">
       <img src="img/attack_A.png" alt="attack A overlay">
@@ -990,8 +1004,8 @@ plt.tight_layout(); plt.show()</div>
 
 <!-- ============ SLIDE A2-5: ATTACK B ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 5 / 7</span><h2 style="display:inline">Attack B — look for a flat horizontal line</h2>
-  <div class="step-card">
+  <span class="step-tag a2">STEP 5 / 7</span><h2 style="display:inline">Attack B. Look for a flat horizontal line</h2>
+  <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
       <div class="step-code">attack = pd.read_csv('attack_B.csv')
@@ -1005,7 +1019,7 @@ for ax, s in zip(axes.flat, informative):
 axes.flat[0].legend()
 plt.tight_layout(); plt.show()</div>
       <p class="step-hint">One sensor's orange line is flat while blue rises. <strong>Stuck-at</strong>.<br>
-      <span class="accent">Answer: s14 — stuck-at.</span></p>
+      <span class="accent">Answer: s14 (stuck-at).</span></p>
     </div>
     <div class="step-out image-out">
       <img src="img/attack_B.png" alt="attack B overlay">
@@ -1015,8 +1029,8 @@ plt.tight_layout(); plt.show()</div>
 
 <!-- ============ SLIDE A2-6: ATTACK C ============ -->
 <section class="step">
-  <span class="step-tag a2">STEP 6 / 7</span><h2 style="display:inline">Attack C — look for a noisier line</h2>
-  <div class="step-card">
+  <span class="step-tag a2">STEP 6 / 7</span><h2 style="display:inline">Attack C. Look for a noisier line</h2>
+  <div class="step-card image-card">
     <div>
       <h4>Paste this</h4>
       <div class="step-code">attack = pd.read_csv('attack_C.csv')
@@ -1030,7 +1044,7 @@ for ax, s in zip(axes.flat, informative):
 axes.flat[0].legend()
 plt.tight_layout(); plt.show()</div>
       <p class="step-hint">Same trend, much higher variance. <strong>Noise injection</strong>.<br>
-      <span class="accent">Answer: s9 — noise.</span></p>
+      <span class="accent">Answer: s9 (noise).</span></p>
     </div>
     <div class="step-out image-out">
       <img src="img/attack_C.png" alt="attack C overlay">
