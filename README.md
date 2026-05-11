@@ -1,110 +1,151 @@
-# WSU Data & Analytics Breakout — May 15, 2026
+# WSU Data & Analytics Breakout, May 15 2026
 
-**Co-presenters:**
-- **Cagri Temel** — CTO, Hezarfen LLC · IEEE Senior Member
-- **Sundar Krishnamurthy** — Security Engineering Leader, Expedia Group · CISSP
+Workshop materials for the breakout session at Washington State University.
+The session runs 09:00 to 11:45, a single block of 165 minutes. The
+hands-on portion uses NASA CMAPSS turbofan engine data to train an
+explainable model (Soft Decision Tree), localize an adversarially
+manipulated sensor, and contribute a real patch to the `neural-trees`
+Python package as part of a closing GitHub sprint.
 
-**Venue:** Washington State University · Data & Analytics Breakout
-**Date:** May 15, 2026 · 09:00–11:45
+This README is a working document for the presenter. It assumes you have
+read `PLAN.md` (Turkish, minute-by-minute) and have a working laptop with
+a recent browser.
 
-**Cagri's segment (~95 min):** *From Black Boxes to Glass Boxes — Building Explainable Neural Trees for Safety-Critical Decisions.* Hands-on workshop using NASA CMAPSS turbofan engine data to train soft decision trees, traverse model explanations, and detect faulty sensors with explainability.
+## Files
 
-This repository contains everything needed to run the 2-hour-45-minute workshop:
-slides, two student notebooks (Colab-ready), the NASA CMAPSS data, three
-adversarial test files for the team competition, and a landing page with QR-code
-onboarding.
-
----
-
-## Repo layout
+Everything needed to run the session is in this repository.
 
 ```
-wsu-workshop-may15/
-├── PLAN.md                              # Minute-by-minute scenario (Turkish)
-├── slides/
-│   └── slides.html                      # Reveal.js single-file deck — open in any browser
-├── notebooks/
-│   ├── activity1_student.ipynb          # Train Your Own Neural Tree (with TODOs)
-│   ├── activity1_solution.ipynb
-│   ├── activity2_student.ipynb          # Adversarial Sensor Challenge (team comp.)
-│   └── activity2_solution.ipynb
-├── data/
-│   ├── train_FD001.txt                  # NASA CMAPSS training trajectories
-│   ├── test_FD001.txt
-│   ├── RUL_FD001.txt
-│   ├── engine17_clean.csv               # Reference engine for Activity #2
-│   ├── attack_A.csv                     # Drift on Sensor 11 (Ps30)
-│   ├── attack_B.csv                     # Stuck-at on Sensor 14 (NRc)
-│   └── attack_C.csv                     # Gaussian noise on Sensor 9 (Nc)
-├── scripts/
-│   └── generate_attack_files.py         # Reproduces the three attack files
-├── landing/
-│   └── index.html                       # Mobile-friendly landing for QR onboarding
-└── assets/
-    └── qr_landing.png                   # QR code → github.com/cgrtml/wsu-workshop-may15
+slides/
+    slides.html                    Reveal.js deck, 56 slides, single file
+    slides-joint-original.html     Earlier joint-deck draft, kept for reference
+    img/                           Plot images embedded in step-by-step slides
+notebooks/
+    activity1_student.ipynb        Train Your Own Neural Tree (with TODOs)
+    activity1_solution.ipynb
+    activity2_student.ipynb        Adversarial Sensor Challenge
+    activity2_solution.ipynb       Instructor key
+data/
+    train_FD001.txt                NASA CMAPSS training trajectories
+    test_FD001.txt
+    RUL_FD001.txt
+    engine17_clean.csv             Reference engine for Activity 2
+    attack_A.csv                   Drift injection, sensor 11
+    attack_B.csv                   Stuck-at, sensor 14
+    attack_C.csv                   Gaussian noise, sensor 9
+scripts/
+    generate_attack_files.py       Reproduces the three attack files
+    rehearsal_activity1.py         Dry-run Activity 1 locally end to end
+    generate_slide_plots.py        Regenerates plot images for the slides
+landing/index.html                 Mobile landing page for QR-code onboarding
+assets/qr_landing.png              QR code, points at this repository
+PLAN.md                            Minute-by-minute scenario (Turkish)
 ```
 
----
+## Before the day
 
-## Running the workshop
+Open `slides/slides.html` in Chrome, Safari, or Firefox. Press `F` for
+fullscreen and use arrow keys to navigate. The deck is a single-file
+Reveal.js page and works offline.
 
-### Before the day
+Open `landing/index.html` on a phone and confirm both Colab notebooks
+launch from it. Print `assets/qr_landing.png` as a fallback in case the
+projector blacks out or wifi drops.
 
-1. Open `slides/slides.html` in Chrome / Safari / Firefox. Press `F` for
-   fullscreen, arrow keys to navigate.
-2. Confirm both Colab notebooks open from the landing page on a phone.
-3. Print the QR code (`assets/qr_landing.png`) as a backup if the projector
-   blacks out.
+If you want to dry-run the student flow yourself before stage day:
 
-### Setup the room sees
+```
+conda create -n wsu-workshop python=3.10 -y
+conda activate wsu-workshop
+pip install neural-trees pandas matplotlib seaborn scikit-learn jupyterlab "numpy<2"
+python scripts/rehearsal_activity1.py
+```
 
-Students scan the QR code → land on `index.html` → tap *Activity 1* → Colab
-opens with the notebook → "Copy to Drive" → run the first cell. No installs,
-no Python environment, no manual file uploads. Total onboarding time is under
-a minute per student.
+The rehearsal script walks Activity 1 end to end: loads CMAPSS, trains
+the soft decision tree, prints test accuracy, saves the confusion matrix
+and one engine's sensor trajectories under `rehearsal_output/`. It runs
+in under a minute on a modern laptop CPU.
 
----
+## On the day
 
-## The two activities at a glance
+Students scan the QR code, land on `index.html`, tap Activity 1, and
+Colab opens the notebook. They tap "Copy to Drive" and run the first
+cell. There is no local Python setup.
 
-**Activity 1 — Train Your Own Neural Tree (55 min, individual)**
+Timeline:
 
-Students load NASA CMAPSS turbofan data, bin RUL into 3 health classes, train a
-`SoftDecisionTree` from the `neural-trees` package, evaluate it, and traverse
-one prediction to read out the rule the model used.
+```
+09:00 - 09:30   Lecture (slides 1 to 18)
+09:30 - 10:25   Activity 1, 11 steps (slides 19 to 32)
+10:25 - 10:35   Break
+10:35 - 11:00   Activity 2, 7 steps (slides 33 to 44)
+11:00 - 11:15   Answers and discussion (slides 45 to 47)
+11:15 - 11:30   GitHub Contribution Sprint (slides 48 to 50)
+11:30 - 11:45   Wrap-up and Q&A (slides 51 to 56)
+```
 
-**Activity 2 — Adversarial Sensor Challenge (35 min, team competition)**
+## Activity 1
 
-3–4 student teams investigate three attack files (drift, stuck-at, gaussian
-noise) on one engine. They use the soft tree's split weights to localize the
-compromised sensor, then compare against a RandomForest baseline that can
-change its prediction but cannot point to the cause. First team to identify
-all three correctly wins.
+55 minutes, individual. Students load CMAPSS FD001 (100 turbofan engines,
+21 sensors per timestep), compute remaining useful life per cycle, bin
+into three health classes (Critical, Caution, Healthy), train a
+`SoftDecisionTree` from `neural-trees` on a stratified 80/20 split, and
+inspect the confusion matrix. They then read the model's split weights
+at every internal node and traverse one specific test sample end to end.
 
-Answer key (instructor only): see `notebooks/activity2_solution.ipynb`.
+The point of the session lands here: the trained model can defend its
+decision sensor by sensor, while an LSTM of equivalent accuracy cannot.
 
----
+## Activity 2
+
+25 minutes, three to four students per team. Each team receives three
+corrupted versions of one engine's telemetry. In each file a single
+sensor has been manipulated, either by a constant offset (drift on
+sensor 11), by freezing at one value (stuck-at on sensor 14), or by
+Gaussian noise injection (sensor 9). They compare predictions from the
+soft decision tree they trained in Activity 1 with a RandomForest
+baseline, observe how each model's behavior shifts under attack, and
+use the soft tree's split weights to localize the faulty sensor in
+each file.
+
+The teaching point: the RandomForest changes its prediction but cannot
+tell you which sensor caused the change. The explainable model can.
+
+The instructor's answer key is `notebooks/activity2_solution.ipynb`.
+Expected answers, in order: sensor 11 (drift), sensor 14 (stuck-at),
+sensor 9 (noise).
+
+## GitHub Contribution Sprint
+
+15 minutes, the closing segment of the session. Students open
+[github.com/cgrtml/neural-trees](https://github.com/cgrtml/neural-trees),
+filter the Issues tab by `good first issue`, pick a 10 to 20 minute
+task, comment "I'm taking this", fork, edit, and open a pull request.
+The instructor reviews live from the stage and merges accepted PRs.
+Merged contributors are credited under a `WSU Workshop Contributors`
+section in the `neural-trees` README.
+
+Roughly 18 `good first issue` tasks are seeded in the repository ahead
+of the session. They cover documentation fixes, small runnable examples
+under `examples/`, additional unit tests, and small quality-of-life
+improvements such as input validation or a clearer error message when
+PyTorch is missing.
 
 ## The library
 
-The workshop uses [`neural-trees`](https://github.com/cgrtml/neural-trees)
-(MIT, on PyPI). All dependencies install with one cell:
+The workshop runs on `neural-trees`, an MIT-licensed Python package that
+implements soft decision trees, omnivariate trees, hierarchical mixture
+of experts, and statistical tests for classifier comparison (5x2cv F
+test, McNemar, paired t-test). Installation is one line, `pip install
+neural-trees`. The PyTorch backend is required, CPU is sufficient for
+all material in the workshop.
 
-```bash
-pip install neural-trees
-```
-
-This is a soft decision tree implementation with a scikit-learn–compatible
-API and a PyTorch backend. The CMAPSS-trained Temporal Neural Tree variant
-referenced in the slides lives in a companion repository
-([`turbofan-explainable-neural-trees`](https://github.com/cgrtml/turbofan-explainable-neural-trees))
-and is the subject of the accompanying workshop paper.
-
----
+The CMAPSS-trained Temporal Neural Tree variant referenced in the
+lecture slides lives in a companion repository,
+[`turbofan-explainable-neural-trees`](https://github.com/cgrtml/turbofan-explainable-neural-trees),
+together with the accompanying paper.
 
 ## Citation
-
-If you build on the workshop materials:
 
 ```bibtex
 @misc{temel2026wsu,
@@ -118,12 +159,11 @@ If you build on the workshop materials:
 }
 ```
 
----
-
 ## Contact
 
-- GitHub: [@cgrtml](https://github.com/cgrtml)
-- LinkedIn: [linkedin.com/in/cagritemel](https://www.linkedin.com/in/cagritemel)
-- Email: cagritemelusa@gmail.com
+Cagri Temel, CTO at Hezarfen LLC, IEEE Senior Member.
+[github.com/cgrtml/neural-trees](https://github.com/cgrtml/neural-trees) ·
+[linkedin.com/in/cagritemel](https://www.linkedin.com/in/cagritemel) ·
+cagritemelusa@gmail.com
 
-© 2026 Hezarfen LLC. Materials released under MIT License.
+Materials released under MIT License.

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>From Black Boxes to Glass Boxes | WSU Workshop, May 15 2026</title>
+<title>From Black Boxes to Glass Boxes — WSU Workshop, May 15 2026</title>
 <meta name="viewport" content="width=1024">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
@@ -124,121 +124,33 @@
     border-radius: 8px;
     color: #DDD;
   }
-  .step-card {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    gap: 22px;
-    margin-top: 14px;
-    text-align: left;
-  }
-  .step-card > div { min-width: 0; }
-  .step-card h4 {
-    font-size: 0.55em;
-    color: #4FC3F7;
-    margin: 0 0 8px 0;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .step-card .step-code {
-    background: #141414;
-    padding: 14px 16px;
-    border-radius: 6px;
-    font-family: "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.40em;
-    line-height: 1.45;
-    color: #E0E0E0;
-    white-space: pre;
-    overflow-x: auto;
-    overflow-y: hidden;
-    border: 1px solid #2a2a2a;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .step-card .step-out {
-    background: #0e1d0e;
-    border-left: 3px solid #66BB6A;
-    padding: 14px 16px;
-    border-radius: 6px;
-    font-family: "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.42em;
-    line-height: 1.45;
-    color: #D8E8D8;
-    white-space: pre;
-    overflow-x: auto;
-    overflow-y: hidden;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .step-card .step-out.image-out {
-    padding: 6px;
-    background: #0a0a0a;
-    border-left: 3px solid #66BB6A;
-  }
-  .step-card .step-out img {
-    width: 100%;
-    border-radius: 4px;
-    display: block;
-  }
-  .step-card.image-card {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
-  }
-  .step-card.image-card .step-code {
-    font-size: 0.38em;
-    line-height: 1.4;
-  }
-  .step-card.image-card .step-hint {
-    font-size: 0.44em;
-  }
-  .step-tag {
-    display: inline-block;
-    background: #4FC3F7;
-    color: #000;
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 0.5em;
-    font-weight: 700;
-    margin-right: 10px;
-    letter-spacing: 0.05em;
-  }
-  .step-tag.a2 { background: #BA68C8; }
-  .step-hint {
-    font-size: 0.5em;
-    color: #888;
-    margin-top: 10px;
-    font-style: italic;
-  }
-  section.step {
-    font-size: 0.95em;
-  }
-  section.step h2 {
-    font-size: 0.85em;
-    margin: 6px 0 2px 0;
-    line-height: 1.2;
-  }
-  section.step .step-tag {
-    margin-bottom: 0;
-  }
 </style>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
 
-<!-- ============ SLIDE 1: COVER ============ -->
+<!-- ============ SLIDE 1: JOINT COVER ============ -->
 <section data-background-color="#0a0a0a">
   <span class="tag">WSU · MAY 15, 2026</span>
+  <h1 style="font-size: 2em; line-height: 1.2;">Data &amp; Analytics<br>Breakout Session</h1>
+  <p style="margin-top: 50px; font-size: 0.7em; color: #BBB;">
+    <strong>Cagri Temel</strong> — CTO, Hezarfen LLC · IEEE Senior Member<br>
+    <strong>Sundar Krishnamurthy</strong> — Security Engineering Leader, Expedia · CISSP
+  </p>
+  <p style="font-size: 0.55em; color: #555; margin-top: 40px;">
+    Washington State University
+  </p>
+</section>
+
+<!-- ============ SLIDE 1B: CAGRI'S SEGMENT TITLE ============ -->
+<section data-background-color="#0a0a0a">
+  <span class="tag">DATA SCIENCE SEGMENT · 95 MIN</span>
   <h1 style="font-size: 2em; line-height: 1.2;">From Black Boxes<br>to Glass Boxes</h1>
   <h3 style="color: #4FC3F7; margin-top: 30px;">Building Explainable Neural Trees<br>for Safety-Critical Decisions</h3>
-  <p style="margin-top: 50px; font-size: 0.7em; color: #BBB;">
-    <strong>Cagri Temel</strong>, CTO at Hezarfen LLC · IEEE Senior Member
-  </p>
-  <p style="font-size: 0.55em; color: #555; margin-top: 30px;">
-    Washington State University · Data &amp; Analytics Breakout
+  <p style="margin-top: 50px; font-size: 0.65em; color: #BBB;">
+    <strong>Cagri Temel</strong> — CTO, Hezarfen LLC<br>
+    <span style="color: #888;">IEEE Senior Member</span>
   </p>
 </section>
 
@@ -247,22 +159,23 @@
   <span class="tag">WHO IS RUNNING THIS</span>
   <h2>Cagri Temel</h2>
   <ul class="tight" style="font-size: 0.75em;">
-    <li>CTO of <strong>Hezarfen LLC</strong>, building explainable AI for regulated industries</li>
+    <li>CTO of <strong>Hezarfen LLC</strong> — explainable AI for regulated industries</li>
     <li>IEEE Senior Member · open-source maintainer</li>
-    <li>Author of <strong>neural-trees</strong> (PyPI, MIT), the package you will use today</li>
+    <li>Author of <strong>neural-trees</strong> (PyPI, MIT) — the package you'll use today</li>
     <li>Workshop paper: <em>Robust and Uncertainty-Aware RUL Prediction with Temporal Neural Trees</em> (NASA CMAPSS)</li>
     <li>Today's mission: in 2 hours and 45 minutes, you build, break, and explain a real model</li>
   </ul>
   <p class="small" style="margin-top: 30px;">github.com/cgrtml/neural-trees · linkedin.com/in/cagritemel</p>
 </section>
 
-<!-- ============ SLIDE 2B: TODAY'S MISSION ============ -->
+<!-- ============ SLIDE 2B: TRANSITION ============ -->
 <section>
-  <span class="tag">TODAY'S MISSION</span>
-  <h2>Data-driven decisions, when the cost of being wrong is high</h2>
+  <span class="tag">SHIFTING GEARS</span>
+  <h2>From systems to data</h2>
   <p style="font-size: 0.85em; line-height: 1.6; margin-top: 30px;">
-    For the next few hours we will look at <span class="accent">how data-driven systems make decisions</span>,
-    and at how we make those decisions <span class="accent">trustworthy</span> in safety-critical settings.
+    Sundar showed how systems are protected.<br>
+    For the next 95 minutes, we shift to <span class="accent">how data-driven systems make decisions</span> —
+    and how we make those decisions <span class="accent">trustworthy</span> in safety-critical settings.
   </p>
   <p class="center-emph" style="margin-top: 50px;">
     Today's case: <span class="accent">a turbofan engine that needs to predict its own failure.</span>
@@ -273,7 +186,7 @@
 <section data-background-color="#0a0a0a">
   <h2 style="font-size: 2em;">A turbofan engine.</h2>
   <p class="center-emph">When will it fail?</p>
-  <p class="small">If you knew with certainty, what would you do differently?</p>
+  <p class="small">If you knew with certainty — what would you do differently?</p>
 </section>
 
 <!-- ============ SLIDE 4: WHY IT MATTERS ============ -->
@@ -281,9 +194,9 @@
   <span class="tag">STAKES</span>
   <h2>Getting this wrong is expensive</h2>
   <ul class="tight" style="font-size: 0.8em;">
-    <li><span class="warn">Predict too late.</span> Engine fails mid-flight. Lives lost.</li>
-    <li><span class="warn">Predict too early.</span> Healthy engines replaced. $100M wasted.</li>
-    <li><span class="warn">Predict accurately but cannot explain.</span> FAA refuses to certify your system.</li>
+    <li><span class="warn">Predict too late</span> — engine fails mid-flight. Lives lost.</li>
+    <li><span class="warn">Predict too early</span> — replace healthy engines. $100M wasted.</li>
+    <li><span class="warn">Predict accurately but cannot explain</span> — FAA refuses to certify your system.</li>
   </ul>
   <p class="center-emph" style="font-size: 1.1em; margin-top: 50px;">
     Accuracy alone is not enough.<br>
@@ -300,7 +213,7 @@
     <li><strong>100 turbofan engines</strong>, simulated to failure</li>
     <li><strong>21 sensors per timestep</strong>: temperatures, pressures, fan speeds, fuel flow</li>
     <li>Each engine logs hundreds of flight cycles before failing</li>
-    <li>Public, open data, cited in 1,000+ academic papers</li>
+    <li>Public, open data — used in 1000+ academic papers</li>
   </ul>
   <p class="smaller" style="margin-top: 20px;">Source: NASA Prognostics Center of Excellence · ti.arc.nasa.gov</p>
 </section>
@@ -317,7 +230,7 @@
     RUL=192  RUL=150  RUL=80   RUL=30   RUL=10   <span class="warn">RUL=0  💥</span>
   </div>
   <p class="small" style="margin-top: 25px;">
-    Train: complete trajectories. Test: partial trajectories, where you predict RUL from what you can see.
+    Train: complete trajectories. Test: partial trajectories — predict RUL from what you can see.
   </p>
 </section>
 
@@ -346,7 +259,7 @@
 <!-- ============ SLIDE 8: LSTM RESULT ============ -->
 <section>
   <span class="tag">A MODERN APPROACH</span>
-  <h2>Deep learning gets us close</h2>
+  <h2>Deep learning solves this — kind of</h2>
   <pre><code class="language-python">model = nn.LSTM(input_size=17, hidden_size=64, num_layers=2)
 # … training …
 RMSE on test set: 15.49 cycles
@@ -409,7 +322,7 @@ R²: 0.855</code></pre>
   </div>
   <p style="font-size: 0.75em; margin-top: 30px;">
     Beautifully explainable. <span class="warn">Often poor accuracy.</span><br>
-    The cause is <strong>hard splits</strong>: a 0.01 difference in a sensor flips the entire path.
+    Why? <strong>Hard splits</strong> — a 0.01 difference in a sensor flips the entire path.
   </p>
 </section>
 
@@ -506,7 +419,7 @@ R²: 0.855</code></pre>
   <table>
     <tr><th>Model</th><th>Clean RMSE</th><th>30% sensors missing</th><th>Explainable?</th></tr>
     <tr><td>LSTM</td><td>15.49</td><td class="warn">+89% degradation</td><td>✗</td></tr>
-    <tr><td>Random Forest</td><td>18.07</td><td>n/a</td><td>partial</td></tr>
+    <tr><td>Random Forest</td><td>18.07</td><td>—</td><td>partial</td></tr>
     <tr class="highlight"><td><strong>Temporal Neural Tree</strong></td><td><strong>15.78</strong></td><td class="good"><strong>+17% degradation</strong></td><td><strong>✓</strong></td></tr>
   </table>
   <p style="font-size: 0.75em; margin-top: 30px;">
@@ -555,7 +468,7 @@ R²: 0.855</code></pre>
 
 <!-- ============ SLIDE 21: ACTIVITY 1 STEPS ============ -->
 <section>
-  <h2>Activity 1: what you will do</h2>
+  <h2>Activity 1 — what you'll do</h2>
   <ol style="font-size: 0.78em; line-height: 1.7;">
     <li><strong>Load &amp; explore</strong> CMAPSS FD001 (10 min)<br>
       <span class="small">Plot a few engines. Find which sensors degrade.</span></li>
@@ -570,176 +483,30 @@ R²: 0.855</code></pre>
   </ol>
 </section>
 
-<!-- ============ SLIDE A1-1: IMPORTS ============ -->
-<section class="step">
-  <span class="step-tag">STEP 1 / 11</span><h2>Imports</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">import numpy as np
-import pandas as pd
+<!-- ============ SLIDE 22: PIP INSTALL CELL ============ -->
+<section>
+  <h3>Step 1 — run the first cell</h3>
+  <pre><code class="language-python">!pip install -q neural-trees pandas matplotlib seaborn
+
+import pandas as pd, numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report, confusion_matrix
 from neural_trees import SoftDecisionTree
-print('All set.')</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">All set.</div>
-      <p class="step-hint">If you see IndentationError, every line must start at the left edge.</p>
-    </div>
-  </div>
+
+# download CMAPSS FD001
+!wget -q https://raw.githubusercontent.com/cgrtml/wsu-workshop-may15/main/data/train_FD001.txt
+!wget -q https://raw.githubusercontent.com/cgrtml/wsu-workshop-may15/main/data/test_FD001.txt
+!wget -q https://raw.githubusercontent.com/cgrtml/wsu-workshop-may15/main/data/RUL_FD001.txt
+
+print("Setup complete.")</code></pre>
+  <p class="small">If you see "Restart runtime" — click Restart, then run again.</p>
 </section>
 
-<!-- ============ SLIDE A1-2: LOAD DATA ============ -->
-<section class="step">
-  <span class="step-tag">STEP 2 / 11</span><h2>Load the data</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">cols = ['engine_id', 'cycle'] + [f'op{i}' for i in range(1, 4)] + [f's{i}' for i in range(1, 22)]
-train = pd.read_csv('train_FD001.txt', sep=r'\s+', header=None, names=cols)
-print(train.shape, '-&gt;', train['engine_id'].nunique(), 'engines')
-train.head()</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">(20631, 26) -&gt; 100 engines
+<!-- ============ SLIDE 23: TRAIN CELL ============ -->
+<section>
+  <h3>Train your soft tree</h3>
+  <pre><code class="language-python">from neural_trees import SoftDecisionTree
 
-   engine_id  cycle  op1  op2  s2  ...  s21
-0          1      1  0.0  0.0 642 ... 23.42
-1          1      2  0.0  0.0 642 ... 23.42
-2          1      3  0.0  0.0 642 ... 23.34
-3          1      4  0.0  0.0 642 ... 23.37
-4          1      5  0.0  0.0 642 ... 23.40</div>
-      <p class="step-hint">100 turbofan engines, 20,631 timesteps total.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A1-3: COMPUTE RUL ============ -->
-<section class="step">
-  <span class="step-tag">STEP 3 / 11</span><h2>Compute Remaining Useful Life</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">max_cycles = train.groupby('engine_id')['cycle'].max().rename('max_cycle')
-train = train.merge(max_cycles, on='engine_id')
-train['RUL'] = (train['max_cycle'] - train['cycle']).clip(upper=125)
-train[['engine_id','cycle','max_cycle','RUL']].head()</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">   engine_id  cycle  max_cycle  RUL
-0          1      1        192  125
-1          1      2        192  125
-2          1      3        192  125
-3          1      4        192  125
-4          1      5        192  125</div>
-      <p class="step-hint">RUL capped at 125. Engine 1 lived 192 cycles in total.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A1-4: PLOT ENGINE 1 ============ -->
-<section class="step">
-  <span class="step-tag">STEP 4 / 11</span><h2>Visualize one engine's degradation</h2>
-  <div class="step-card image-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">engine = train[train['engine_id'] == 1].set_index('cycle')
-engine[['s2','s7','s11','s14']].plot(
-    subplots=True, layout=(2,2), figsize=(12,6))
-plt.suptitle('Engine 1 sensor degradation', y=1.02)
-plt.tight_layout(); plt.show()</div>
-      <p class="step-hint">s2, s11, s14 trend up. s7 trends down. The engine is wearing.</p>
-    </div>
-    <div class="step-out image-out">
-      <img src="img/step4_engine1.png" alt="engine 1 sensor trajectories">
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A1-5: BIN RUL ============ -->
-<section class="step">
-  <span class="step-tag">STEP 5 / 11</span><h2>Bin RUL into three classes</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">def bin_rul(rul):
-    if rul &lt; 30: return 0   # Critical
-    elif rul &lt; 80: return 1 # Caution
-    return 2                  # Healthy
-
-train['health'] = train['RUL'].apply(bin_rul)
-train['health'].value_counts().sort_index()</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">health
-0     3000
-1     5000
-2    12631
-Name: count, dtype: int64</div>
-      <p class="step-hint">14% Critical · 24% Caution · 61% Healthy.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A1-6: FEATURE MATRIX ============ -->
-<section class="step">
-  <span class="step-tag">STEP 6 / 11</span><h2>Build the feature matrix</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">all_sensors = [f's{i}' for i in range(1, 22)]
-informative = [s for s in all_sensors if train[s].std() &gt; 0.001]
-X = train[informative].values
-y = train['health'].values
-scaler = StandardScaler()
-X = scaler.fit_transform(X)
-print('X shape:', X.shape, '· y shape:', y.shape)</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">X shape: (20631, 15) · y shape: (20631,)</div>
-      <p class="step-hint">15 of 21 sensors are informative. s1, s5, s10, s16, s18, s19 are constant and dropped.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A1-7: SPLIT ============ -->
-<section class="step">
-  <span class="step-tag">STEP 7 / 11</span><h2>Train / test split</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">X_train, X_test, y_train, y_test = train_test_split(
-    X, y,
-    test_size=0.2,
-    stratify=y,
-    random_state=42,
-)
-print(X_train.shape, X_test.shape)</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">(16504, 15) (4127, 15)</div>
-      <p class="step-hint">80/20 split. stratify=y preserves the 14/24/62 class ratio in both sets.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A1-8: TRAIN SDT ============ -->
-<section class="step">
-  <span class="step-tag">STEP 8 / 11</span><h2>Train the Soft Decision Tree (30 to 60 sec)</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">tree = SoftDecisionTree(
+tree = SoftDecisionTree(
     depth=4,
     max_epochs=30,
     learning_rate=0.01,
@@ -747,106 +514,28 @@ print(X_train.shape, X_test.shape)</div>
     verbose=True,
 )
 tree.fit(X_train, y_train)
-acc = (tree.predict(X_test) == y_test).mean()
-print(f'Test accuracy: {acc:.3f}')</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">Epoch 5/30   loss=0.362  acc=0.851
-Epoch 10/30  loss=0.355  acc=0.853
-Epoch 15/30  loss=0.352  acc=0.854
-Epoch 20/30  loss=0.351  acc=0.855
-Epoch 25/30  loss=0.350  acc=0.854
-Epoch 30/30  loss=0.349  acc=0.855
-Test accuracy: 0.841</div>
-      <p class="step-hint">Train vs test gap ≈ 1 point. No overfitting.</p>
-    </div>
-  </div>
+
+acc = tree.score(X_test, y_test)
+print(f"Test accuracy: {acc:.3f}")</code></pre>
+  <p class="small">Expected: ~85–90% accuracy. Trains in 30–60 seconds on CPU.</p>
 </section>
 
-<!-- ============ SLIDE A1-9: CONFUSION MATRIX ============ -->
-<section class="step">
-  <span class="step-tag">STEP 9 / 11</span><h2>Confusion matrix and per-class report</h2>
-  <div class="step-card image-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">labels = ['Critical', 'Caution', 'Healthy']
-y_pred = tree.predict(X_test)
-cm = confusion_matrix(y_test, y_pred)
-fig, ax = plt.subplots(figsize=(6, 5))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-            xticklabels=labels, yticklabels=labels, ax=ax)
-plt.title('Confusion matrix'); plt.show()
-print(classification_report(y_test, y_pred,
-      target_names=labels))</div>
-      <p class="step-hint">0 false-Criticals on Healthy engines. Only 5 missed-Critical on 600.</p>
-    </div>
-    <div class="step-out image-out">
-      <img src="img/step9_confusion.png" alt="confusion matrix">
-    </div>
-  </div>
-</section>
+<!-- ============ SLIDE 24: TRAVERSE PREDICTION ============ -->
+<section>
+  <h3>Traverse a prediction</h3>
+  <pre><code class="language-python"># pick one engine from the test set
+engine_idx = 17
+x = X_test[engine_idx]
 
-<!-- ============ SLIDE A1-10: SPLIT WEIGHTS ============ -->
-<section class="step">
-  <span class="step-tag">STEP 10 / 11</span><h2>Which sensor does each node lean on?</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">splits = tree.get_split_weights()
-print(f'Internal nodes: {len(splits)}')
-for i, w in enumerate(splits):
-    dom = informative[np.argmax(np.abs(w))]
-    print(f'  Node {i:2d} -&gt; {dom:4s}')</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">Internal nodes: 15
-  Node  0 -&gt; s7
-  Node  1 -&gt; s14
-  Node  2 -&gt; s6
-  Node  3 -&gt; s14
-  Node  4 -&gt; s6
-  Node  5 -&gt; s6
-  Node  6 -&gt; s12
-  ...</div>
-      <p class="step-hint">s14 and s6 dominate multiple nodes. These are the model's pillars.</p>
-    </div>
-  </div>
-</section>
+# get the path probabilities and split weights
+splits = tree.get_split_weights()
+leaves = tree.get_leaf_distributions()
 
-<!-- ============ SLIDE A1-11: TRAVERSE PREDICTION ============ -->
-<section class="step">
-  <span class="step-tag">STEP 11 / 11</span><h2>Read one prediction (the heart of the workshop)</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">idx = 17
-x = X_test[idx]
-true = labels[y_test[idx]]
-pred = labels[tree.predict([x])[0]]
-proba = tree.predict_proba([x])[0]
-root = informative[np.argmax(np.abs(splits[0]))]
-
-print(f'True class:      {true}')
-print(f'Predicted class: {pred}')
-print(f'Probabilities:   '
-      f'Critical={proba[0]:.3f} '
-      f'Caution={proba[1]:.3f} '
-      f'Healthy={proba[2]:.3f}')
-print(f'Root sensor:     {root}')</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">True class:      Caution
-Predicted class: Healthy
-Probabilities:   Critical=0.000
-                 Caution=0.148
-                 Healthy=0.852
-Root sensor:     s7</div>
-      <p class="step-hint">You can defend this prediction to a regulator. An LSTM cannot.</p>
-    </div>
-  </div>
+# print the dominant path: which sensor at which threshold drove the decision?
+print(f"Predicted class: {tree.predict([x])[0]}")
+print(f"Dominant sensor at root: feature {np.argmax(np.abs(splits[0]))}")
+# … walk through children …</code></pre>
+  <p class="small">You will literally read out the rule the model used. <span class="accent">This is what regulators want.</span></p>
 </section>
 
 <!-- ============ SLIDE 25: CHECKPOINT ============ -->
@@ -860,7 +549,7 @@ Root sensor:     s7</div>
   </ul>
   <p class="center-emph" style="margin-top: 40px;">
     ☕ 10-minute break.<br>
-    <span class="small">Activity 2 (team competition) starts at 11:00.</span>
+    <span class="small">Activity 2 — team competition — starts at 11:00.</span>
   </p>
 </section>
 
@@ -870,7 +559,7 @@ Root sensor:     s7</div>
   <h2 style="font-size: 1.8em;">Sensor Fault Detection</h2>
   <p class="center-emph">
     One of engine 17's sensors is reporting bad data.<br>
-    <span class="accent">Which sensor, and can your model tell you why?</span>
+    <span class="accent">Which sensor — and can your model tell you why?</span>
   </p>
 </section>
 
@@ -881,15 +570,15 @@ Root sensor:     s7</div>
     You are the data science team at an airline. Maintenance ops sends you three suspicious test files for the same engine:
   </p>
   <blockquote style="border-left: 4px solid #FFB74D; padding: 16px 24px; margin: 30px 0; background: rgba(255, 183, 77, 0.08); font-size: 0.78em;">
-    "Something is wrong with engine 17. The pattern looks like a sensor drift, a frozen sensor, or noise spikes, but we cannot tell which channel is at fault. <strong>Localize the faulty sensor before the next flight.</strong>"
+    "Something is wrong with engine 17. The pattern looks like a sensor drift, a frozen sensor, or noise spikes — but we cannot tell which channel is at fault. <strong>Localize the faulty sensor before the next flight.</strong>"
   </blockquote>
   <p style="font-size: 0.78em;">You have two models in production:</p>
   <ul class="tight" style="font-size: 0.75em;">
-    <li>Your <strong>SoftDecisionTree</strong> from Activity 1, explainable</li>
-    <li>A <strong>RandomForest</strong> baseline, accurate but opaque</li>
+    <li>Your <strong>SoftDecisionTree</strong> (from Activity 1) — explainable</li>
+    <li>A <strong>RandomForest</strong> baseline — accurate but opaque</li>
   </ul>
   <p class="small" style="margin-top: 20px;">
-    The same technique works for hardware failures and for adversarial attacks. Both manifest as anomalous sensor patterns the model has to flag.
+    The same technique works for hardware failures and adversarial attacks — both manifest as anomalous sensor patterns the model has to flag.
   </p>
 </section>
 
@@ -897,7 +586,7 @@ Root sensor:     s7</div>
 <section>
   <h2>Teams</h2>
   <ul class="tight" style="font-size: 0.85em;">
-    <li>Form groups of <strong>3 to 4 students</strong></li>
+    <li>Form groups of <strong>3–4 students</strong></li>
     <li>Use the same notebook within your team</li>
     <li>You have <strong>17 minutes</strong> for analysis</li>
     <li>Then we collect answers</li>
@@ -917,181 +606,21 @@ Root sensor:     s7</div>
     <tr><td><code>attack_C.csv</code></td><td>Gaussian noise injection</td><td>Which sensor?</td></tr>
   </table>
   <p style="font-size: 0.75em; margin-top: 30px;">
-    Each file is a copy of clean engine 17 data, but one sensor channel has been manipulated.
+    Each file is a copy of clean engine 17 data — but one sensor channel has been manipulated.
   </p>
 </section>
 
-<!-- ============ SLIDE A2-1: RF BASELINE ============ -->
-<section class="step">
-  <span class="step-tag a2">STEP 1 / 7</span><h2>Add a RandomForest baseline</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">from sklearn.ensemble import RandomForestClassifier
-rf = RandomForestClassifier(
-    n_estimators=100, random_state=42
-).fit(X_train, y_train)
-
-print(f'SoftTree accuracy: '
-      f'{(tree.predict(X_test) == y_test).mean():.3f}')
-print(f'RandomForest      : '
-      f'{(rf.predict(X_test) == y_test).mean():.3f}')</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">SoftTree accuracy: 0.841
-RandomForest      : 0.843</div>
-      <p class="step-hint">Two models, nearly identical accuracy. One is explainable. One is not.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A2-2: CLEAN BASELINE ============ -->
-<section class="step">
-  <span class="step-tag a2">STEP 2 / 7</span><h2>Predict on clean engine 17</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">clean = pd.read_csv('engine17_clean.csv')
-Xc = scaler.transform(clean[informative].values)
-clean_tree_pred = tree.predict(Xc)
-clean_rf_pred = rf.predict(Xc)
-
-print(f'Engine 17 clean: {len(Xc)} cycles')
-print(f'Tree vs RF agreement: '
-      f'{(clean_tree_pred == clean_rf_pred).mean():.2f}')</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">Engine 17 clean: 276 cycles
-Tree vs RF agreement: 0.95</div>
-      <p class="step-hint">95% agreement on clean data. The two models say roughly the same thing.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A2-3: SCORE ATTACKS ============ -->
-<section class="step">
-  <span class="step-tag a2">STEP 3 / 7</span><h2>How much did each attack move the predictions?</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this (three blocks, one per file)</h4>
-      <div class="step-code">for fname in ['attack_A.csv', 'attack_B.csv', 'attack_C.csv']:
-    df = pd.read_csv(fname)
-    Xa = scaler.transform(df[informative].values)
-    pt = tree.predict(Xa)
-    pr = rf.predict(Xa)
-    print(f'{fname}: '
-          f'Tree changed {(pt != clean_tree_pred).sum():3d}/{len(pt)} | '
-          f'RF changed {(pr != clean_rf_pred).sum():3d}/{len(pr)}')</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">attack_A.csv: Tree  18/276 | RF  14/276
-attack_B.csv: Tree  33/276 | RF   8/276
-attack_C.csv: Tree   8/276 | RF   1/276</div>
-      <p class="step-hint">Attack C: RF changed at only 1 cycle. It is missing the attack. The Soft Tree caught 8.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A2-4: ATTACK A ============ -->
-<section class="step">
-  <span class="step-tag a2">STEP 4 / 7</span><h2>Attack A. Look for two parallel lines</h2>
-  <div class="step-card image-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">clean = pd.read_csv('engine17_clean.csv')
-attack = pd.read_csv('attack_A.csv')
-fig, axes = plt.subplots(4, 4, figsize=(16, 10))
-for ax, s in zip(axes.flat, informative):
-    ax.plot(clean['cycle'], clean[s],
-            label='clean', alpha=0.7)
-    ax.plot(attack['cycle'], attack[s],
-            label='attack', alpha=0.7)
-    ax.set_title(s)
-axes.flat[0].legend()
-plt.tight_layout(); plt.show()</div>
-      <p class="step-hint">One sensor shows the orange line shifted up by a constant offset. That is <strong>drift</strong>.<br>
-      <span class="accent">Answer: s11 (drift).</span></p>
-    </div>
-    <div class="step-out image-out">
-      <img src="img/attack_A.png" alt="attack A overlay">
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A2-5: ATTACK B ============ -->
-<section class="step">
-  <span class="step-tag a2">STEP 5 / 7</span><h2>Attack B. Look for a flat horizontal line</h2>
-  <div class="step-card image-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">attack = pd.read_csv('attack_B.csv')
-fig, axes = plt.subplots(4, 4, figsize=(16, 10))
-for ax, s in zip(axes.flat, informative):
-    ax.plot(clean['cycle'], clean[s],
-            label='clean', alpha=0.7)
-    ax.plot(attack['cycle'], attack[s],
-            label='attack', alpha=0.7)
-    ax.set_title(s)
-axes.flat[0].legend()
-plt.tight_layout(); plt.show()</div>
-      <p class="step-hint">One sensor's orange line is flat while blue rises. <strong>Stuck-at</strong>.<br>
-      <span class="accent">Answer: s14 (stuck-at).</span></p>
-    </div>
-    <div class="step-out image-out">
-      <img src="img/attack_B.png" alt="attack B overlay">
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A2-6: ATTACK C ============ -->
-<section class="step">
-  <span class="step-tag a2">STEP 6 / 7</span><h2>Attack C. Look for a noisier line</h2>
-  <div class="step-card image-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">attack = pd.read_csv('attack_C.csv')
-fig, axes = plt.subplots(4, 4, figsize=(16, 10))
-for ax, s in zip(axes.flat, informative):
-    ax.plot(clean['cycle'], clean[s],
-            label='clean', alpha=0.7)
-    ax.plot(attack['cycle'], attack[s],
-            label='attack', alpha=0.7)
-    ax.set_title(s)
-axes.flat[0].legend()
-plt.tight_layout(); plt.show()</div>
-      <p class="step-hint">Same trend, much higher variance. <strong>Noise injection</strong>.<br>
-      <span class="accent">Answer: s9 (noise).</span></p>
-    </div>
-    <div class="step-out image-out">
-      <img src="img/attack_C.png" alt="attack C overlay">
-    </div>
-  </div>
-</section>
-
-<!-- ============ SLIDE A2-7: QUANTIFY ============ -->
-<section class="step">
-  <span class="step-tag a2">STEP 7 / 7</span><h2>Quantify the divergence</h2>
-  <div class="step-card">
-    <div>
-      <h4>Paste this</h4>
-      <div class="step-code">for fname in ['attack_A.csv', 'attack_B.csv', 'attack_C.csv']:
-    a = pd.read_csv(fname)
-    d = {s: float(np.mean(np.abs(clean[s].values - a[s].values)))
-         for s in informative}
-    top = sorted(d.items(), key=lambda kv: -kv[1])[:3]
-    print(f'{fname} top 3: {top}')</div>
-    </div>
-    <div>
-      <h4>You should see</h4>
-      <div class="step-out">attack_A: [('s11', 0.367), ('s2', 0.0), ('s3', 0.0)]
-attack_B: [('s14', 19.89), ('s2', 0.0), ('s3', 0.0)]
-attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
-      <p class="step-hint">Numbers confirm the visual answer. Only one sensor differs in each file.</p>
-    </div>
-  </div>
+<!-- ============ SLIDE 30: METHODOLOGY ============ -->
+<section>
+  <h2>How to investigate</h2>
+  <ol style="font-size: 0.78em; line-height: 1.7;">
+    <li>Run <strong>both models</strong> on each attack file.</li>
+    <li>Compare predictions vs. clean baseline.</li>
+    <li>For the <strong>SoftDecisionTree</strong>: look at the split weights of the dominant path.<br>
+        <span class="small">Did one feature suddenly become more or less important?</span></li>
+    <li>For the <strong>RandomForest</strong>: you'll get a different prediction. <span class="warn">But can it tell you why?</span></li>
+    <li>Submit your answer: which sensor for each attack?</li>
+  </ol>
 </section>
 
 <!-- ============ SLIDE 31: TIME ON CLOCK ============ -->
@@ -1101,7 +630,7 @@ attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
     Open <code>activity2_student.ipynb</code><br>
     Run cells. Discuss as a team. Pick your answers.
   </p>
-  <p class="small">I will come around with hints, but I will not give you the answer.</p>
+  <p class="small">I'll come around with hints — but I won't give you the answer.</p>
 </section>
 
 <!-- ============ SLIDE 32: ANSWERS ============ -->
@@ -1122,7 +651,7 @@ attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
 <section>
   <h2>What just happened</h2>
   <ul class="tight" style="font-size: 0.78em;">
-    <li>The <strong>RandomForest</strong> changed its prediction, but could not tell you <span class="warn">why</span>.</li>
+    <li>The <strong>RandomForest</strong> changed its prediction — but couldn't tell you <span class="warn">why</span>.</li>
     <li>The <strong>SoftDecisionTree's split weights</strong> shifted in a sensor-specific way.</li>
     <li>That shift <em>is</em> the explanation. It's a fingerprint of which sensor the model is leaning on.</li>
   </ul>
@@ -1148,10 +677,10 @@ attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
   <h2>How it works</h2>
   <ol style="font-size: 0.78em; line-height: 1.7;">
     <li>Open <strong>github.com/cgrtml/neural-trees</strong> → <em>Issues</em> tab</li>
-    <li>Filter by the label <code>good first issue</code> and pick one with a 10 to 20 minute scope</li>
+    <li>Filter by label: <code>good first issue</code> — pick one (10–20 min scope)</li>
     <li>Comment "I'm taking this" so no duplicates</li>
     <li>Fork the repo, edit, open a PR</li>
-    <li>I will review live. Simple PRs get merged on the spot.</li>
+    <li>I'll review live — simple PRs get merged on the spot</li>
   </ol>
   <p class="center-emph" style="margin-top: 30px; font-size: 1em;">
     20+ issues waiting · pick what fits your level
@@ -1162,10 +691,10 @@ attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
 <section>
   <h2>Why this is worth your 15 minutes</h2>
   <ul class="tight" style="font-size: 0.78em; line-height: 1.6;">
-    <li><strong>A concrete open-source contribution</strong> on your profile, visible to recruiters, internships, and grad-school admissions.</li>
-    <li>You become part of a published Python ML library (PyPI: <code>neural-trees</code>).</li>
-    <li><strong>Your name goes in the README.</strong> I will add a "WSU Workshop Contributors" section listing every merged PR.</li>
-    <li>It is real proof that you can collaborate on a codebase, not just clone tutorials.</li>
+    <li><strong>Concrete OSS contribution</strong> on your profile — visible to recruiters, internships, grad-school admissions.</li>
+    <li>You'll be part of a published Python ML library (PyPI: <code>neural-trees</code>).</li>
+    <li><strong>You'll be in the README</strong> — I'll add a "WSU Workshop Contributors" section listing every merged PR.</li>
+    <li>It's a real proof you can collaborate on a codebase, not just clone tutorials.</li>
   </ul>
   <p class="center-emph" style="margin-top: 40px;">
     <span class="accent">Open the repo. Pick an issue. Go.</span>
@@ -1183,16 +712,16 @@ attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
     For "high-risk" systems (predictive maintenance for aviation qualifies):
   </p>
   <ul class="tight" style="font-size: 0.72em;">
-    <li>Article 13: <strong>Transparency &amp; explanation</strong> requirements</li>
-    <li>Article 14: <strong>Human oversight</strong> with meaningful interpretation</li>
-    <li>Article 15: <strong>Robustness</strong> against adversarial inputs and faults</li>
+    <li>Article 13 — <strong>Transparency &amp; explanation</strong> requirements</li>
+    <li>Article 14 — <strong>Human oversight</strong> with meaningful interpretation</li>
+    <li>Article 15 — <strong>Robustness</strong> against adversarial inputs and faults</li>
   </ul>
   <p class="small" style="margin-top: 25px;">Same direction in the US: SR 11-7 (banking), FDA SaMD, FAA AC 25-1309.</p>
 </section>
 
 <!-- ============ SLIDE 35: WRAPPING UP ============ -->
 <section data-background-color="#0a1a0a">
-  <span class="tag" style="background: #81C784;">WRAP-UP · 5 MIN</span>
+  <span class="tag" style="background: #81C784;">JOINT WRAP-UP · 5 MIN</span>
   <h2>What you walk out with</h2>
   <ol style="font-size: 0.8em; line-height: 1.7; margin-top: 30px;">
     <li><span class="accent">Explainability is mandatory in safety-critical AI.</span><br>
@@ -1208,14 +737,14 @@ attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
 <section>
   <h2>Where this is going</h2>
   <p style="font-size: 0.78em; line-height: 1.6;">
-    Banks (Model Risk Management), insurers, healthcare, aerospace.
-    Every regulated industry needs explainable AI.
+    Banks (Model Risk Management), insurers, healthcare, aerospace —
+    every regulated industry needs explainable AI.
   </p>
   <p style="font-size: 0.78em; margin-top: 20px;">
     My company <strong>Hezarfen</strong> builds compliance-ready AI for US mid-market banks under SR 11-7 and the EU AI Act.
   </p>
   <p class="center-emph" style="margin-top: 50px; font-size: 1em;">
-    If any of this interested you, whether as a thesis topic, an open-source contribution, or just a conversation,
+    If this interested you — thesis topic, open-source contribution, conversation —
     <span class="accent">reach out.</span>
   </p>
 </section>
@@ -1223,13 +752,20 @@ attack_C: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]</div>
 <!-- ============ SLIDE 37: LINKS ============ -->
 <section>
   <h2>Stay in touch</h2>
-  <div style="margin-top: 40px; text-align: center;">
-    <h3 style="color: #4FC3F7;">Cagri Temel</h3>
-    <p class="small">Hezarfen LLC · IEEE Senior Member</p>
-    <p class="big-link" style="font-size: 1em; margin-top: 24px;">github.com/cgrtml/neural-trees</p>
-    <p class="big-link" style="font-size: 1em;">linkedin.com/in/cagritemel</p>
+  <div class="two-col" style="margin-top: 30px;">
+    <div>
+      <h3>Sundar Krishnamurthy</h3>
+      <p class="small">Security Engineering · Expedia Group · CISSP</p>
+      <p class="big-link" style="font-size: 0.9em;">linkedin.com/in/sundarkrishnamurthy</p>
+    </div>
+    <div>
+      <h3>Cagri Temel</h3>
+      <p class="small">Hezarfen LLC · IEEE Senior Member</p>
+      <p class="big-link" style="font-size: 0.9em;">github.com/cgrtml/neural-trees</p>
+      <p class="big-link" style="font-size: 0.9em;">linkedin.com/in/cagritemel</p>
+    </div>
   </div>
-  <p class="small" style="margin-top: 50px;">
+  <p class="small" style="margin-top: 40px;">
     Workshop materials: <strong>github.com/cgrtml/wsu-workshop-may15</strong>
   </p>
 </section>
