@@ -778,6 +778,43 @@ def slide_a1_qr():
               "Do not advance until at least 80 percent of the room is on the Colab notebook.")
 
 
+def slide_how_colab_works():
+    s = prs.slides.add_slide(prs.slide_layouts[BLANK])
+    set_bg(s)
+    add_tag(s, 'BEFORE WE START', Inches(0.6), Inches(0.5))
+    add_text(s, 'How a Colab notebook works',
+             Inches(0.6), Inches(1.05), Inches(12), Inches(0.9),
+             size=32, bold=True, color=ACCENT)
+    # Left column: anatomy of a cell
+    add_text(s, 'A NOTEBOOK = A LIST OF CELLS',
+             Inches(0.6), Inches(2.1), Inches(6.5), Inches(0.4),
+             size=12, bold=True, color=ACCENT)
+    anatomy = [
+        ('Each gray box you see in the notebook is one "cell".', {'size': 14, 'space_after': 6}),
+        ('A cell can contain code or text. The ones you will run are code cells.', {'size': 14, 'space_after': 14}),
+        ('1. Click anywhere inside a cell to start editing.', {'size': 14, 'space_after': 4}),
+        ('2. Paste code with Command-V (Mac) or Control-V (Windows).', {'size': 14, 'space_after': 4}),
+        ('3. Press Shift+Enter to run, OR click the ▶ button on the left.', {'size': 14, 'space_after': 4, 'bold': True}),
+        ('4. Output (numbers, tables, plots) appears right below the cell.', {'size': 14, 'space_after': 4}),
+        ('5. To add a new cell, hover between cells and click "+ Code".', {'size': 14, 'space_after': 0}),
+    ]
+    add_multi(s, anatomy, Inches(0.6), Inches(2.5), Inches(6.6), Inches(4.5), line_spacing=1.3)
+    # Right column: what status icons mean
+    add_text(s, 'WHILE A CELL RUNS',
+             Inches(7.4), Inches(2.1), Inches(5.5), Inches(0.4),
+             size=12, bold=True, color=ACCENT)
+    runs = [
+        ('[ ]  — cell has not been run yet', {'size': 14, 'space_after': 8, 'font': 'Menlo'}),
+        ('[*]  — cell is running right now', {'size': 14, 'space_after': 8, 'font': 'Menlo', 'color': WARN}),
+        ('[1]  — cell finished. The number is its run order.', {'size': 14, 'space_after': 14, 'font': 'Menlo', 'color': GOOD}),
+        ('Red error box = something went wrong. Read the LAST line of red text; that is the actual error message.', {'size': 13, 'space_after': 0, 'italic': True, 'color': MUTED}),
+    ]
+    add_multi(s, runs, Inches(7.4), Inches(2.5), Inches(5.5), Inches(4.5), line_spacing=1.4)
+    add_text(s, 'Run cells IN ORDER, top to bottom. Skipping cells will cause "name is not defined" errors.',
+             Inches(0.6), Inches(7.0), Inches(12.2), Inches(0.4),
+             size=12, italic=True, color=WARN, align=PP_ALIGN.CENTER)
+
+
 def slide_a1_overview():
     s = prs.slides.add_slide(prs.slide_layouts[BLANK])
     set_bg(s)
@@ -1686,6 +1723,7 @@ slide_paper_numbers()
 slide_package()
 slide_a1_intro()
 slide_a1_qr()
+slide_how_colab_works()
 slide_a1_overview()
 for step in A1_STEPS:
     add_a1_step(step)

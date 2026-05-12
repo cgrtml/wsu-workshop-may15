@@ -393,7 +393,30 @@ add_speech(
 )
 add_direction("Watch the room for two minutes. Help anyone who's stuck. Do not advance until ~80% are on the notebook.")
 
-add_slide_header(22, 'Activity 1 Overview', '09:33')
+add_slide_header(22, 'How a Colab Notebook Works', '09:33')
+add_speech(
+    "Before we start the steps, thirty seconds on how Colab actually works. "
+    "If you've never used a notebook before, this is the only thing you need to know."
+)
+add_speech(
+    "Your notebook is a list of cells. Each gray box you see is one cell. "
+    "To run a cell, click into it, then press Shift+Enter. "
+    "You can also click the play button on the left of the cell."
+)
+add_speech(
+    "While a cell is running, you'll see a star in brackets next to it. "
+    "When it finishes, the star turns into a number — that's the order it ran in. "
+    "If you see a red box, that's an error. Always read the LAST line of red text; that's the actual error message."
+)
+add_emphasis(
+    "Most important rule: run cells in order, top to bottom. "
+    "Don't skip cells. If you do, you'll get 'name is not defined' errors because the variable wasn't created yet."
+)
+add_speech(
+    "Okay. With that out of the way, let's look at what the next fifty-five minutes look like."
+)
+
+add_slide_header(23, 'Activity 1 Overview', '09:34')
 add_speech("Quick overview of the next fifty-five minutes. Six main stages.")
 add_speech(
     "We load CMAPSS and look at it. Bin the labels into three classes. Train the Soft Decision Tree — that takes about a minute. "
@@ -404,7 +427,7 @@ add_emphasis(
     "If you remember one thing from this entire workshop, it should be that step. Let's start."
 )
 
-add_slide_header(23, 'Step 1 — Imports', '09:34')
+add_slide_header(24, 'Step 1 — Imports', '09:34')
 add_speech("First step: imports. Paste this code into a fresh cell. Hit Shift+Enter. You should see 'All set.'")
 add_speech(
     "If you get an IndentationError, that means one of your lines has a stray space at the beginning. "
@@ -412,7 +435,7 @@ add_speech(
     "and run again."
 )
 
-add_slide_header(24, 'Step 2 — Load Data', '09:37')
+add_slide_header(25, 'Step 2 — Load Data', '09:37')
 add_speech(
     "Now we load the data. CMAPSS comes as a plain text file with no headers, so we tell pandas what to call the columns."
 )
@@ -424,7 +447,7 @@ add_emphasis(
     "Those numbers — temperatures, pressures, fan speeds — those are exactly what a real flight data recorder logs."
 )
 
-add_slide_header(25, 'Step 3 — Compute RUL', '09:41')
+add_slide_header(26, 'Step 3 — Compute RUL', '09:41')
 add_speech(
     "Step three computes the label we're trying to predict. For each row, RUL equals the engine's maximum cycle minus the current cycle. "
     "We cap it at a hundred and twenty-five."
@@ -434,7 +457,7 @@ add_speech(
     "because at the very start of the engine's life, the real RUL is way above a hundred and twenty-five, but we capped it. That's expected."
 )
 
-add_slide_header(26, 'Step 4 — Plot Engine 1', '09:44')
+add_slide_header(27, 'Step 4 — Plot Engine 1', '09:44')
 add_speech(
     "Now we visualize. We're going to plot four sensors for engine one across its entire one-hundred-and-ninety-two-cycle life."
 )
@@ -448,7 +471,7 @@ add_emphasis(
     "Now we have to teach a model to see it."
 )
 
-add_slide_header(27, 'Step 5 — Bin RUL', '09:49')
+add_slide_header(28, 'Step 5 — Bin RUL', '09:49')
 add_speech(
     "We're going to turn this into a classification problem. RUL is a number, but in real aviation operations, no one says "
     "'this engine has forty-seven cycles left.' They say 'this engine is healthy', 'caution', or 'critical.'"
@@ -459,7 +482,7 @@ add_speech(
     "The classes are imbalanced. That's reality. Most of the time the engine is fine."
 )
 
-add_slide_header(28, 'Step 6 — Feature Matrix', '09:53')
+add_slide_header(29, 'Step 6 — Feature Matrix', '09:53')
 add_speech(
     "Now we drop the six sensors that are constant. They carry no information. That leaves fifteen informative sensors. "
     "Then we standardize — every column gets zero mean and unit variance."
@@ -469,7 +492,7 @@ add_speech(
     "After this runs, you should see X shape twenty-thousand-six-hundred-and-thirty-one by fifteen. Y shape twenty-thousand-six-hundred-and-thirty-one."
 )
 
-add_slide_header(29, 'Step 7 — Train/Test Split', '09:57')
+add_slide_header(30, 'Step 7 — Train/Test Split', '09:57')
 add_speech("Standard train-test split. Eighty percent training, twenty percent test.")
 add_speech(
     "Two things matter here. Stratify equals y — that preserves the class ratio in both sets. "
@@ -479,7 +502,7 @@ add_speech(
     "After this runs you should see sixteen thousand five hundred and four rows for training. Four thousand one hundred and twenty-seven for test."
 )
 
-add_slide_header(30, 'Step 8 — Train SDT', '10:00')
+add_slide_header(31, 'Step 8 — Train SDT', '10:00')
 add_speech("Okay, this is the slow one. About thirty to sixty seconds on CPU.")
 add_speech(
     "While we wait, let me tell you what's happening. PyTorch is doing backpropagation on sixteen thousand rows for thirty epochs. "
@@ -495,7 +518,7 @@ add_speech(
 add_direction("Let them shout out a number. Most will guess around 0.85.")
 add_emphasis("Right. About the same. The point is not accuracy. The point is what we can do with the model next.")
 
-add_slide_header(31, 'Step 9 — Confusion Matrix', '10:05')
+add_slide_header(32, 'Step 9 — Confusion Matrix', '10:05')
 add_speech("Now we look at where the model is right and where it's wrong.")
 add_speech("You should see a confusion matrix. Three by three. Color-coded.")
 add_emphasis(
@@ -510,7 +533,7 @@ add_emphasis(
     "In aviation language: we don't miss many dangerous engines, and we don't waste healthy ones. That's a useful model."
 )
 
-add_slide_header(32, 'Step 10 — Split Weights', '10:10')
+add_slide_header(33, 'Step 10 — Split Weights', '10:10')
 add_speech(
     "Now we peek inside the model. Soft decision trees have fifteen internal nodes — one root, then it branches out. "
     "For each internal node, we ask: which sensor does this node lean on the most?"
@@ -523,7 +546,7 @@ add_emphasis(
     "Those are the pillars of the model. If those sensors go bad, the model is in trouble. Remember sensor fourteen. It comes back in Activity 2."
 )
 
-add_slide_header(33, 'Step 11 — Traverse Prediction', '10:15')
+add_slide_header(34, 'Step 11 — Traverse Prediction', '10:15')
 add_emphasis("This is the step that matters most.")
 add_speech(
     "We pick one specific test sample — sample seventeen — and we ask the model: what did you predict, "
@@ -541,7 +564,7 @@ add_emphasis(
     "An LSTM cannot give you this answer. That is why we did all of this."
 )
 
-add_slide_header(34, 'Checkpoint', '10:23')
+add_slide_header(35, 'Checkpoint', '10:23')
 add_speech("Okay. Take a breath.")
 add_speech(
     "By now you should have three things on your screen. A trained Soft Decision Tree. "
@@ -557,7 +580,7 @@ doc.add_page_break()
 # ============ BLOCK 3 - ACTIVITY 2 ============
 add_section_heading('Block 3 — Activity 2: Adversarial Sensor Challenge', 'Running time 10:35 to 11:00 · 25 minutes')
 
-add_slide_header(35, 'Activity 2 Intro', '10:35')
+add_slide_header(36, 'Activity 2 Intro', '10:35')
 add_speech("Okay, we're back. Activity 2 is different. This is a competition. You'll work in teams.")
 add_speech("The first team to identify all three attacks correctly gets bragging rights for the day.")
 add_emphasis(
@@ -565,7 +588,7 @@ add_emphasis(
     "You don't know what kind of attack. Your job is to find both."
 )
 
-add_slide_header(36, 'Scenario', '10:36')
+add_slide_header(37, 'Scenario', '10:36')
 add_speech("Imagine you're the data science team at an airline. Maintenance ops just sent you a message.")
 add_emphasis(
     "'Something is wrong with engine seventeen. The pattern looks like a sensor drift, a frozen sensor, or noise spikes, "
@@ -576,7 +599,7 @@ add_speech(
     "And we'll add a RandomForest baseline, which is more accurate but opaque. Use both. See which one is actually useful."
 )
 
-add_slide_header(37, 'Teams', '10:37')
+add_slide_header(38, 'Teams', '10:37')
 add_speech("Okay. Form groups of three to four people. Pick the people next to you. Thirty seconds.")
 add_direction("Walk to the back of the room while teams form. Come back.")
 add_speech(
@@ -585,7 +608,7 @@ add_speech(
     "First team to identify all three correctly — sensor and attack type for each file — wins."
 )
 
-add_slide_header(38, 'Three Attack Files', '10:38')
+add_slide_header(39, 'Three Attack Files', '10:38')
 add_speech("Three files.")
 add_speech("Attack A is a drift — a sensor with a constant offset added.")
 add_speech("Attack B is stuck-at — a sensor frozen at a single value.")
@@ -595,7 +618,7 @@ add_emphasis(
     "Find which one."
 )
 
-add_slide_header(39, 'A2 Step 1 — RF Baseline', '10:40')
+add_slide_header(40, 'A2 Step 1 — RF Baseline', '10:40')
 add_speech("First, we add a RandomForest baseline. Same data, same labels.")
 add_speech(
     "When you run this, you should see two accuracies. SoftTree around 0.841. RandomForest around 0.843. "
@@ -603,7 +626,7 @@ add_speech(
 )
 add_emphasis("The whole point of this activity is showing what happens when we move OFF clean data.")
 
-add_slide_header(40, 'A2 Step 2 — Clean Baseline', '10:42')
+add_slide_header(41, 'A2 Step 2 — Clean Baseline', '10:42')
 add_speech(
     "Now we load the clean engine seventeen file. This is the reference — the un-attacked version. "
     "We run both models on it and store the predictions."
@@ -613,7 +636,7 @@ add_speech(
     "That's our baseline. When reality is normal, the two models say the same thing."
 )
 
-add_slide_header(41, 'A2 Step 3 — Score Attacks', '10:44')
+add_slide_header(42, 'A2 Step 3 — Score Attacks', '10:44')
 add_speech(
     "Now we run both models on each of the three attack files, and compare against the clean baseline."
 )
@@ -629,7 +652,7 @@ add_emphasis(
     "The explainable model is also the more sensitive one to subtle manipulations. That's not a coincidence."
 )
 
-add_slide_header(42, 'A2 Step 4 — Attack A', '10:48')
+add_slide_header(43, 'A2 Step 4 — Attack A', '10:48')
 add_speech("Now we visualize Attack A. We plot each sensor twice. Clean in blue. Attack in orange.")
 add_speech(
     "Fourteen of the fifteen panels will show only one line — because the blue and orange overlap exactly. "
@@ -639,7 +662,7 @@ add_speech("Look carefully. Which sensor is it?")
 add_direction("Pause. Let teams whisper to each other.")
 add_emphasis("If you see two parallel lines — same shape, just shifted — that's drift. A constant offset. The answer is sensor eleven.")
 
-add_slide_header(43, 'A2 Step 5 — Attack B', '10:51')
+add_slide_header(44, 'A2 Step 5 — Attack B', '10:51')
 add_speech("Same plot. Same logic. For Attack B.")
 add_speech(
     "Look for the sensor where blue and orange diverge. This time the orange line will be completely flat — "
@@ -653,7 +676,7 @@ add_speech(
 )
 add_emphasis("That's not a coincidence. That's how adversarial attacks work.")
 
-add_slide_header(44, 'A2 Step 6 — Attack C', '10:54')
+add_slide_header(45, 'A2 Step 6 — Attack C', '10:54')
 add_speech("Attack C is the subtlest one.")
 add_speech(
     "Look at all fifteen panels. In one of them, the orange line follows the same trend as blue — but it's noticeably more jagged. "
@@ -666,7 +689,7 @@ add_speech(
     "That's why the RandomForest missed it. The trend was right, so it kept saying 'fine.'"
 )
 
-add_slide_header(45, 'A2 Step 7 — Quantify', '10:57')
+add_slide_header(46, 'A2 Step 7 — Quantify', '10:57')
 add_speech("Last step. Let's quantify what we just saw with our eyes.")
 add_speech(
     "For each attack file, we compute the mean absolute difference between clean and attack for every sensor. "
@@ -686,7 +709,7 @@ doc.add_page_break()
 # ============ BLOCK 4 - CLOSE OF ACTIVITY 2 ============
 add_section_heading('Block 4 — Live Answers and Discussion', 'Running time 11:00 to 11:15')
 
-add_slide_header(46, 'Time on Clock', '10:42 — actually start')
+add_slide_header(47, 'Time on Clock', '10:42 — actually start')
 add_direction("This is the SLIDE that's up while teams work for 17 minutes. Start the timer here, do not skip.")
 add_speech(
     "Okay, seventeen minutes on the clock starting now. Open activity-two-student-dot-ipynb on your laptop. "
@@ -694,7 +717,7 @@ add_speech(
 )
 add_emphasis("I'll give hints, but I won't give you the answer. Go.")
 
-add_slide_header(47, 'Answers', '11:00')
+add_slide_header(48, 'Answers', '11:00')
 add_speech("Okay, time's up. Here are the answers.")
 add_speech("Attack A is sensor eleven. Drift.")
 add_speech("Attack B is sensor fourteen. Stuck-at.")
@@ -702,7 +725,7 @@ add_speech("Attack C is sensor nine. Gaussian noise.")
 add_emphasis("Show of hands — which team got all three?")
 add_direction("Acknowledge the winning team by name. Lead a round of applause.")
 
-add_slide_header(48, 'What Just Happened', '11:03')
+add_slide_header(49, 'What Just Happened', '11:03')
 add_speech("Here's what we just demonstrated.")
 add_speech(
     "The RandomForest changed its prediction under attack, but it couldn't tell you which sensor caused the change. "
@@ -720,7 +743,7 @@ doc.add_page_break()
 # ============ BLOCK 5 - GITHUB SPRINT ============
 add_section_heading('Block 5 — GitHub Contribution Sprint', 'Running time 11:15 to 11:30 · 15 minutes')
 
-add_slide_header(49, 'Sprint Intro', '11:15')
+add_slide_header(50, 'Sprint Intro', '11:15')
 add_speech("Okay, last fifteen minutes. This part is different from everything else.")
 add_emphasis(
     "You're going to make a real open-source contribution to a real Python library that's on PyPI. "
@@ -728,7 +751,7 @@ add_emphasis(
     "Your name on it. Forever."
 )
 
-add_slide_header(50, 'Sprint Mechanics', '11:17')
+add_slide_header(51, 'Sprint Mechanics', '11:17')
 add_speech("Here's how it works. Seven steps.")
 add_speech("One. Open github-dot-com slash cgrtml slash neural-trees. Go to the Issues tab.")
 add_speech("Two. Filter by 'good first issue.' Pick one — they're all ten to twenty minute scope.")
@@ -746,7 +769,7 @@ add_emphasis(
     "About twenty issues are waiting. Pick what fits your level."
 )
 
-add_slide_header(51, 'Why Do It', '11:20')
+add_slide_header(52, 'Why Do It', '11:20')
 add_speech("Why is this worth fifteen minutes of your day? Three reasons.")
 add_speech(
     "One. Your contribution shows up on your GitHub profile. That's visible to recruiters, internship coordinators, grad school admissions. "
@@ -765,7 +788,7 @@ doc.add_page_break()
 # ============ BLOCK 6 - WRAP UP ============
 add_section_heading('Block 6 — Wrap-up and Q&A', 'Running time 11:30 to 11:45 · 15 minutes')
 
-add_slide_header(52, 'EU AI Act', '11:30')
+add_slide_header(53, 'EU AI Act', '11:30')
 add_speech("Quick context for why all of this matters in the real world.")
 add_speech(
     "The EU AI Act took effect in 2025. If your AI system serves any European customer, three articles apply. "
@@ -777,7 +800,7 @@ add_emphasis(
     "The era of 'just ship the LSTM' is ending. The era of 'show your work' is starting."
 )
 
-add_slide_header(53, 'Wrap-Up', '11:33')
+add_slide_header(54, 'Wrap-Up', '11:33')
 add_speech("Three things to take with you.")
 add_speech("One. In safety-critical AI, explainability is not optional. It's a regulatory requirement.")
 add_speech("Two. Soft Decision Trees give you both worlds. Neural-network-level accuracy with tree-level interpretability.")
@@ -786,7 +809,7 @@ add_emphasis(
     "You trained a model, you localized a sensor fault, and many of you just shipped your first open-source contribution."
 )
 
-add_slide_header(54, 'Career Bridge', '11:36')
+add_slide_header(55, 'Career Bridge', '11:36')
 add_speech("Where does this work go next?")
 add_speech(
     "Banks, insurers, healthcare, aerospace. Every regulated industry needs explainable AI right now."
@@ -799,7 +822,7 @@ add_emphasis(
     "or just a conversation about where to go after graduation — reach out. My email and LinkedIn are on the next slide."
 )
 
-add_slide_header(55, 'Links', '11:39')
+add_slide_header(56, 'Links', '11:39')
 add_speech("Here are the three things worth bookmarking.")
 add_speech("My GitHub — where neural-trees lives.")
 add_speech("My LinkedIn — happy to connect with any of you.")
@@ -808,7 +831,7 @@ add_speech(
     "Take a photo of this slide if you want."
 )
 
-add_slide_header(56, 'Thank You', '11:42')
+add_slide_header(57, 'Thank You', '11:42')
 add_speech("Thank you.")
 add_speech("Special thanks to Dr. Sergey Lapin, and to Jeremy, for the invitation. Without them this wouldn't have happened.")
 add_speech("I'll stay for five minutes after the official close. If you have questions, come up to the stage.")
