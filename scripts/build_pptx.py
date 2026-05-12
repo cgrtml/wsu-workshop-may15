@@ -1454,22 +1454,28 @@ def slide_sprint_intro():
 def slide_sprint_mechanics():
     s = prs.slides.add_slide(prs.slide_layouts[BLANK])
     set_bg(s)
-    add_text(s, 'How it works', Inches(0.6), Inches(0.7), Inches(12), Inches(1),
-             size=40, bold=True, color=ACCENT)
+    add_text(s, 'How it works', Inches(0.6), Inches(0.5), Inches(12), Inches(0.8),
+             size=36, bold=True, color=ACCENT)
     items = [
-        ('1. Open github.com/cgrtml/neural-trees → Issues tab', {'size': 18, 'space_after': 14}),
-        ('2. Filter by label: good first issue. Pick one (10 to 20 min scope)', {'size': 18, 'space_after': 14}),
-        ('3. Comment "I am taking this" so no duplicates', {'size': 18, 'space_after': 14}),
-        ('4. Fork the repo, edit, open a PR', {'size': 18, 'space_after': 14}),
-        ('5. I will review live. Simple PRs get merged on the spot.', {'size': 18, 'space_after': 14, 'color': GOOD}),
+        ('1. Open github.com/cgrtml/neural-trees → Issues tab', {'size': 15, 'space_after': 10}),
+        ('2. Filter by label "good first issue". Pick one (10 to 20 min scope)', {'size': 15, 'space_after': 10}),
+        ('3. Comment "I am taking this" so no duplicates', {'size': 15, 'space_after': 10}),
+        ('4. Fork the repo (top-right button). Open the file you want to edit IN YOUR FORK.', {'size': 15, 'space_after': 10, 'bold': True}),
+        ('5. Press the "." key on your keyboard. GitHub web editor opens. Edit. Commit on a new branch.', {'size': 15, 'space_after': 10, 'color': ACCENT}),
+        ('6. Click "Compare & pull request". Short description. Open the PR.', {'size': 15, 'space_after': 10}),
+        ('7. I will review live. Simple PRs get merged on the spot.', {'size': 15, 'space_after': 10, 'color': GOOD, 'bold': True}),
     ]
-    add_multi(s, items, Inches(0.8), Inches(2.0), Inches(12), Inches(5))
+    add_multi(s, items, Inches(0.7), Inches(1.5), Inches(12.3), Inches(5))
+    add_text(s, 'No local git, no clone, no token. Everything in the browser.',
+             Inches(0.6), Inches(6.4), Inches(12), Inches(0.4),
+             size=13, color=MUTED, italic=True, align=PP_ALIGN.CENTER)
     add_text(s, '~20 issues waiting · pick what fits your level',
-             Inches(0.6), Inches(6.7), Inches(12), Inches(0.4),
-             size=14, color=ACCENT, italic=True, align=PP_ALIGN.CENTER)
-    add_notes(s, "Walk through the mechanics. Five steps. Emphasize step 5: 'I will review live. "
-              "If your PR is correct, I merge it on the spot, and your name goes into the contributors list of a real ML library.' "
-              "Roughly 20 good first issues are waiting; they range from doc fixes to small tests to runnable examples.")
+             Inches(0.6), Inches(6.9), Inches(12), Inches(0.4),
+             size=13, color=ACCENT, italic=True, align=PP_ALIGN.CENTER)
+    add_notes(s, "Walk through the mechanics. Seven steps now — the dot-key trick is the one that saves "
+              "first-time contributors. Emphasize step 7: 'I will review live. If your PR is correct, I merge it "
+              "on the spot, and your name goes into the contributors list of a real ML library.' "
+              "Roughly twenty good first issues are waiting; they range from doc fixes to small tests to runnable examples.")
 
 
 def slide_sprint_why():

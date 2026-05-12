@@ -729,14 +729,21 @@ add_emphasis(
 )
 
 add_slide_header(50, 'Sprint Mechanics', '11:17')
-add_speech("Here's how it works.")
-add_speech("Open github-dot-com slash cgrtml slash neural-trees. Go to the Issues tab.")
-add_speech("Filter by 'good first issue.' Pick one — they're all ten to twenty minute scope.")
-add_speech("Comment 'I'm taking this' so two people don't pick the same one.")
-add_speech("Fork the repo, make the change in your fork, and open a pull request.")
+add_speech("Here's how it works. Seven steps.")
+add_speech("One. Open github-dot-com slash cgrtml slash neural-trees. Go to the Issues tab.")
+add_speech("Two. Filter by 'good first issue.' Pick one — they're all ten to twenty minute scope.")
+add_speech("Three. Comment 'I'm taking this' so two people don't pick the same one.")
+add_speech("Four. Click the Fork button — top right of the page. That gives you your own copy of the repo.")
+add_speech("Five. Open the file you want to edit — in YOUR fork, not in mine.")
 add_emphasis(
-    "I'll review it from my laptop right here on stage. If it's correct, I merge it on the spot. "
-    "There are about twenty issues waiting. Pick what fits your level."
+    "And here's the trick that saves you ten minutes: press the dot key on your keyboard. "
+    "GitHub's full web editor opens, right there in the browser. You can edit like you're in VS Code."
+)
+add_speech("Six. Commit your change on a new branch. Then click 'Compare and pull request,' add a short description, and submit.")
+add_speech("Seven. I'll review it from my laptop right here on stage. If it's correct, I merge it on the spot.")
+add_emphasis(
+    "No local git. No clone. No tokens. Everything in the browser. "
+    "About twenty issues are waiting. Pick what fits your level."
 )
 
 add_slide_header(51, 'Why Do It', '11:20')

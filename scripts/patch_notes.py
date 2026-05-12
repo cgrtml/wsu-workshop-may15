@@ -368,11 +368,17 @@ NOTES = [
     "Your name on it. Forever.",
 
     # 49. Sprint mechanics
-    "Here's how it works. Open github.com/cgrtml/neural-trees. Go to the Issues tab. "
+    "Here's how it works. Seven steps. "
+    "Open github.com/cgrtml/neural-trees. Go to the Issues tab. "
     "Filter by good first issue. Pick one — they're all ten to twenty minute scope. "
     "Comment 'I'm taking this' so two people don't pick the same one. "
-    "Fork the repo, make the change in your fork, open a pull request. "
+    "Then click Fork in the top right. That gives you your own copy of the repo. "
+    "Open the file you want to edit IN YOUR FORK, not in mine. "
+    "And here's the trick that saves you ten minutes: press the dot key on your keyboard. "
+    "GitHub's full web editor opens. You can edit there like in VS Code. "
+    "Commit on a new branch, then click 'Compare and pull request,' add a short description, and open the PR. "
     "I'll review it from my laptop right here on stage. If it's correct, I merge it on the spot. "
+    "No local git. No clone. No tokens. Everything in the browser. "
     "There are about twenty issues waiting. Pick what fits your level.",
 
     # 50. Sprint why
