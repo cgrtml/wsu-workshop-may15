@@ -71,6 +71,31 @@ a1_cells.append(md_cell(
     "If you get stuck, the full solution is in `activity1_solution.ipynb`.\n"
 ))
 
+a1_cells.append(md_cell(
+    "## Setup — install the library and download the data (run this first, ONE time)\n"
+    "\n"
+    "Colab does not ship with the `neural-trees` package, and the NASA CMAPSS data files\n"
+    "are not bundled into Colab either. Run the cell below first. It will:\n"
+    "\n"
+    "- Install `neural-trees` from PyPI (about 20 seconds)\n"
+    "- Download the three CMAPSS data files from the workshop GitHub repo\n"
+    "\n"
+    "After this finishes, you can move on to **Step 1**.\n"
+))
+
+a1_cells.append(code_cell(
+    "# Workshop setup — run this cell once before starting Step 1\n"
+    "!pip install -q neural-trees\n"
+    "\n"
+    "import os\n"
+    "BASE = 'https://raw.githubusercontent.com/cgrtml/wsu-workshop-may15/main/data'\n"
+    "for f in ['train_FD001.txt', 'test_FD001.txt', 'RUL_FD001.txt']:\n"
+    "    if not os.path.exists(f):\n"
+    "        !wget -q {BASE}/{f}\n"
+    "\n"
+    "print('Setup done. neural-trees installed, CMAPSS files downloaded.')\n"
+))
+
 a1_steps = [
     ("Step 1 — Imports",
      "Pull in every library this activity uses. After this runs you should see `All set.`"),
@@ -158,14 +183,30 @@ a2_cells.append(md_cell(
 ))
 
 a2_cells.append(md_cell(
-    "### Setup (only if you closed the Activity 1 notebook)\n"
+    "## Setup — install the library, download the files, re-train the model (run this first)\n"
     "\n"
-    "If your Activity 1 variables are still in memory, **skip this cell**. Otherwise,\n"
-    "running this re-creates everything you need from scratch.\n"
+    "Activity 2 runs in a fresh Colab notebook, so it cannot see the variables you\n"
+    "trained in Activity 1. Run the cell below first. It will:\n"
+    "\n"
+    "- Install `neural-trees`\n"
+    "- Download CMAPSS training data plus the three attack files\n"
+    "- Re-train the Soft Decision Tree so `tree`, `informative`, `scaler`, `labels`, and\n"
+    "  the train/test splits are all defined for the seven steps below\n"
+    "\n"
+    "This takes about 60 seconds.\n"
 ))
 
 a2_cells.append(code_cell(
-    "# Setup cell — only run if you lost the Activity 1 kernel state\n"
+    "# Workshop setup — run once before starting Step 1\n"
+    "!pip install -q neural-trees\n"
+    "\n"
+    "import os\n"
+    "BASE = 'https://raw.githubusercontent.com/cgrtml/wsu-workshop-may15/main/data'\n"
+    "for f in ['train_FD001.txt', 'engine17_clean.csv',\n"
+    "          'attack_A.csv', 'attack_B.csv', 'attack_C.csv']:\n"
+    "    if not os.path.exists(f):\n"
+    "        !wget -q {BASE}/{f}\n"
+    "\n"
     "import numpy as np\n"
     "import pandas as pd\n"
     "import matplotlib.pyplot as plt\n"
