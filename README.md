@@ -1,6 +1,22 @@
 # WSU Data & Analytics Breakout, May 15 2026
 
-Workshop materials for the breakout session at Washington State University.
+**Students: click a button below to open the activity in Google Colab.**
+Sign in with your Google account, then click **Copy to Drive** so you have
+your own editable copy. The first cell installs everything you need
+(about 20 seconds). Then follow along with the slides on the projector.
+
+[![Open Activity 1 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cgrtml/wsu-workshop-may15/blob/main/notebooks/activity1_student.ipynb) **Activity 1 — Train Your Own Neural Tree** (55 min, individual)
+
+[![Open Activity 2 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cgrtml/wsu-workshop-may15/blob/main/notebooks/activity2_student.ipynb) **Activity 2 — Adversarial Sensor Challenge** (25 min, team)
+
+**Prerequisites (do this before May 15):**
+- A Google account, for Colab. Personal Gmail or .edu both work.
+- A GitHub account, for the closing 15-minute contribution sprint. Free signup at [github.com/signup](https://github.com/signup).
+
+---
+
+## About the workshop
+
 The session runs 09:00 to 11:45, a single block of 165 minutes. The
 hands-on portion uses NASA CMAPSS turbofan engine data to train an
 explainable model (Soft Decision Tree), localize an adversarially
