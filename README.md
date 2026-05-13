@@ -84,36 +84,369 @@ Timeline:
 11:30 - 11:45   Wrap-up and Q&A (slides 51 to 56)
 ```
 
-## Activity 1
+## Activity 1 — Train Your Own Neural Tree
 
-55 minutes, individual. Students load CMAPSS FD001 (100 turbofan engines,
-21 sensors per timestep), compute remaining useful life per cycle, bin
-into three health classes (Critical, Caution, Healthy), train a
-`SoftDecisionTree` from `neural-trees` on a stratified 80/20 split, and
-inspect the confusion matrix. They then read the model's split weights
-at every internal node and traverse one specific test sample end to end.
+55 minutes, individual. Eleven copy-and-paste steps below. Each block is
+designed to be pasted into a new Colab cell and run with `Shift+Enter`.
+Variables persist across cells, so each step builds on the previous one.
 
-The point of the session lands here: the trained model can defend its
-decision sensor by sensor, while an LSTM of equivalent accuracy cannot.
+### Step 1 — Imports
 
-## Activity 2
+Bring in every library the activity needs. After this runs you should see
+`All set.` in the output.
 
-25 minutes, three to four students per team. Each team receives three
-corrupted versions of one engine's telemetry. In each file a single
-sensor has been manipulated, either by a constant offset (drift on
-sensor 11), by freezing at one value (stuck-at on sensor 14), or by
-Gaussian noise injection (sensor 9). They compare predictions from the
-soft decision tree they trained in Activity 1 with a RandomForest
-baseline, observe how each model's behavior shifts under attack, and
-use the soft tree's split weights to localize the faulty sensor in
-each file.
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report, confusion_matrix
+from neural_trees import SoftDecisionTree
+print('All set.')
+```
 
-The teaching point: the RandomForest changes its prediction but cannot
-tell you which sensor caused the change. The explainable model can.
+### Step 2 — Load CMAPSS FD001
 
-The instructor's answer key is `notebooks/activity2_solution.ipynb`.
-Expected answers, in order: sensor 11 (drift), sensor 14 (stuck-at),
-sensor 9 (noise).
+Read the NASA training file as a pandas dataframe.
+
+```python
+cols = ['engine_id', 'cycle'] + [f'op{i}' for i in range(1, 4)] + [f's{i}' for i in range(1, 22)]
+train = pd.read_csv('train_FD001.txt', sep=r'\s+', header=None, names=cols)
+print(train.shape, '->', train['engine_id'].nunique(), 'engines')
+train.head()
+```
+
+Expected: `(20631, 26) -> 100 engines`, plus the first five rows of engine 1.
+
+### Step 3 — Compute Remaining Useful Life (RUL)
+
+For each row, RUL = max cycle for that engine minus current cycle, capped at 125.
+
+```python
+max_cycles = train.groupby('engine_id')['cycle'].max().rename('max_cycle')
+train = train.merge(max_cycles, on='engine_id')
+train['RUL'] = (train['max_cycle'] - train['cycle']).clip(upper=125)
+train[['engine_id', 'cycle', 'max_cycle', 'RUL']].head()
+```
+
+Expected: a five-row table with engine 1 showing `max_cycle = 192` and `RUL = 125`
+for every early cycle (the cap is in effect).
+
+### Step 4 — Visualize engine 1's sensor degradation
+
+Plot four sensors across the engine's life. Sensors 2, 11, 14 trend up;
+sensor 7 trends down. The data is telling the story of failure.
+
+```python
+engine = train[train['engine_id'] == 1].set_index('cycle')
+engine[['s2', 's7', 's11', 's14']].plot(subplots=True, layout=(2, 2), figsize=(12, 6))
+plt.suptitle('Engine 1 sensor degradation', y=1.02)
+plt.tight_layout()
+plt.show()
+```
+
+Expected: a 2x2 grid of line plots, one per sensor.
+
+### Step 5 — Bin RUL into three health classes
+
+Critical (RUL < 30), Caution (30 ≤ RUL < 80), Healthy (RUL ≥ 80).
+
+```python
+def bin_rul(rul):
+    if rul < 30:
+        return 0
+    elif rul < 80:
+        return 1
+    return 2
+
+train['health'] = train['RUL'].apply(bin_rul)
+train['health'].value_counts().sort_index()
+```
+
+Expected:
+
+```
+health
+0     3000
+1     5000
+2    12631
+```
+
+Roughly 14% Critical, 24% Caution, 61% Healthy.
+
+### Step 6 — Build the feature matrix
+
+Drop the six sensors that are constant (no signal). Standardize what remains.
+
+```python
+all_sensors = [f's{i}' for i in range(1, 22)]
+informative = [s for s in all_sensors if train[s].std() > 0.001]
+X = train[informative].values
+y = train['health'].values
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+print('X shape:', X.shape, '· y shape:', y.shape)
+```
+
+Expected: `X shape: (20631, 15) · y shape: (20631,)`.
+
+### Step 7 — Train / test split
+
+80 / 20 split, stratified by `y` so the class ratio is preserved in both halves.
+
+```python
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42,
+)
+print(X_train.shape, X_test.shape)
+```
+
+Expected: `(16504, 15) (4127, 15)`.
+
+### Step 8 — Train the Soft Decision Tree
+
+About 30 to 60 seconds on CPU. PyTorch runs backpropagation on 16,500 rows for
+30 epochs.
+
+```python
+tree = SoftDecisionTree(
+    depth=4,
+    max_epochs=30,
+    learning_rate=0.01,
+    penalty_coef=1e-3,
+    verbose=True,
+)
+tree.fit(X_train, y_train)
+acc = (tree.predict(X_test) == y_test).mean()
+print(f'Test accuracy: {acc:.3f}')
+```
+
+Expected: per-epoch loss decreasing, final `Test accuracy: ~0.84`.
+
+### Step 9 — Confusion matrix and per-class report
+
+Where does the model get it right, and where does it get it wrong?
+
+```python
+labels = ['Critical', 'Caution', 'Healthy']
+y_pred = tree.predict(X_test)
+cm = confusion_matrix(y_test, y_pred)
+fig, ax = plt.subplots(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=labels, yticklabels=labels, ax=ax)
+plt.title('Confusion matrix')
+plt.show()
+print(classification_report(y_test, y_pred, target_names=labels))
+```
+
+Expected: a Blues heatmap and a per-class precision / recall report. The
+bottom-left cell should be 0 — no Healthy engine ever flagged as Critical.
+
+### Step 10 — Inspect the split weights
+
+For each of the 15 internal nodes, print the sensor with the largest absolute
+weight. Some sensors will appear multiple times — these are the model's pillars.
+
+```python
+splits = tree.get_split_weights()
+print(f'Internal nodes: {len(splits)}')
+for i, w in enumerate(splits):
+    dom = informative[np.argmax(np.abs(w))]
+    print(f'  Node {i:2d} -> {dom}')
+```
+
+Expected: 15 lines, with `s14` and `s6` (or similar) appearing more than once.
+
+### Step 11 — Read one prediction (the heart of the workshop)
+
+Pick test sample 17 and ask the model: what did you predict, with what
+confidence, and which sensor did you look at first?
+
+```python
+idx = 17
+x = X_test[idx]
+true = labels[y_test[idx]]
+pred = labels[tree.predict([x])[0]]
+proba = tree.predict_proba([x])[0]
+root = informative[np.argmax(np.abs(splits[0]))]
+
+print(f'True class:      {true}')
+print(f'Predicted class: {pred}')
+print(f'Probabilities:   Critical={proba[0]:.3f}  Caution={proba[1]:.3f}  Healthy={proba[2]:.3f}')
+print(f'Root sensor:     {root}')
+```
+
+Expected output (approximately):
+
+```
+True class:      Caution
+Predicted class: Healthy
+Probabilities:   Critical=0.000  Caution=0.148  Healthy=0.852
+Root sensor:     s7
+```
+
+Now the model can answer "why did you say Healthy?" with a specific sensor
+and a specific threshold. An LSTM of equivalent accuracy cannot.
+
+---
+
+## Activity 2 — Adversarial Sensor Challenge
+
+25 minutes, three to four students per team. Seven copy-and-paste steps. You
+keep the `tree`, `informative`, `scaler`, `X_train`, `y_train` and `labels`
+objects from Activity 1 — do not restart the notebook.
+
+Each team gets three corrupted versions of one engine's telemetry. In each
+file, exactly one sensor channel has been manipulated. The job: find which
+sensor and which kind of attack.
+
+### Step 1 — Add a RandomForest baseline
+
+A black-box comparison for the explainable Soft Decision Tree.
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42).fit(X_train, y_train)
+print(f'SoftTree accuracy: {(tree.predict(X_test) == y_test).mean():.3f}')
+print(f'RandomForest     : {(rf.predict(X_test) == y_test).mean():.3f}')
+```
+
+Expected: roughly `0.841` and `0.843`. Essentially identical on clean data.
+
+### Step 2 — Predict on clean engine 17
+
+Establish a reference: what do both models say about the un-attacked engine?
+
+```python
+clean = pd.read_csv('engine17_clean.csv')
+Xc = scaler.transform(clean[informative].values)
+clean_tree_pred = tree.predict(Xc)
+clean_rf_pred = rf.predict(Xc)
+print(f'Engine 17 clean: {len(Xc)} cycles')
+print(f'Tree vs RF agreement: {(clean_tree_pred == clean_rf_pred).mean():.2f}')
+```
+
+Expected: 276 cycles, agreement around `0.95`.
+
+### Step 3 — How much did each attack change the predictions?
+
+Run both models on each attack file and count cycle-by-cycle disagreement
+against the clean baseline.
+
+```python
+for fname in ['attack_A.csv', 'attack_B.csv', 'attack_C.csv']:
+    df = pd.read_csv(fname)
+    Xa = scaler.transform(df[informative].values)
+    pt = tree.predict(Xa)
+    pr = rf.predict(Xa)
+    tc = (pt != clean_tree_pred).sum()
+    rc = (pr != clean_rf_pred).sum()
+    print(f'{fname}: Tree changed {tc:3d}/{len(pt)} | RF changed {rc:3d}/{len(pr)}')
+```
+
+Expected:
+
+```
+attack_A.csv: Tree changed  18/276 | RF changed  14/276
+attack_B.csv: Tree changed  33/276 | RF changed   8/276
+attack_C.csv: Tree changed   8/276 | RF changed   1/276
+```
+
+On attack C the RandomForest barely notices. The Soft Tree does.
+
+### Step 4 — Visualize Attack A (look for two parallel lines)
+
+Plot every informative sensor twice — clean in blue, attack in orange.
+Fourteen panels will show only one line. One panel will show two parallel
+lines: that is the manipulated sensor.
+
+```python
+clean = pd.read_csv('engine17_clean.csv')
+attack = pd.read_csv('attack_A.csv')
+fig, axes = plt.subplots(4, 4, figsize=(16, 10))
+for ax, s in zip(axes.flat, informative):
+    ax.plot(clean['cycle'], clean[s], label='clean', alpha=0.7)
+    ax.plot(attack['cycle'], attack[s], label='attack', alpha=0.7)
+    ax.set_title(s)
+axes.flat[0].legend()
+plt.tight_layout()
+plt.show()
+```
+
+Answer: sensor 11, drift.
+
+### Step 5 — Visualize Attack B (look for a flat horizontal line)
+
+Same plot for attack B. This time the orange line on the manipulated sensor
+will be completely flat while the blue line keeps evolving.
+
+```python
+attack = pd.read_csv('attack_B.csv')
+fig, axes = plt.subplots(4, 4, figsize=(16, 10))
+for ax, s in zip(axes.flat, informative):
+    ax.plot(clean['cycle'], clean[s], label='clean', alpha=0.7)
+    ax.plot(attack['cycle'], attack[s], label='attack', alpha=0.7)
+    ax.set_title(s)
+axes.flat[0].legend()
+plt.tight_layout()
+plt.show()
+```
+
+Answer: sensor 14, stuck-at. Notice that sensor 14 was one of the model's
+pillars in Activity 1 step 10 — attackers go for what the model relies on.
+
+### Step 6 — Visualize Attack C (look for a noisier line)
+
+Subtler. The trend is preserved; only the variance changes.
+
+```python
+attack = pd.read_csv('attack_C.csv')
+fig, axes = plt.subplots(4, 4, figsize=(16, 10))
+for ax, s in zip(axes.flat, informative):
+    ax.plot(clean['cycle'], clean[s], label='clean', alpha=0.7)
+    ax.plot(attack['cycle'], attack[s], label='attack', alpha=0.7)
+    ax.set_title(s)
+axes.flat[0].legend()
+plt.tight_layout()
+plt.show()
+```
+
+Answer: sensor 9, Gaussian noise. This is why the RandomForest missed it —
+trend was right, so it kept saying "fine".
+
+### Step 7 — Quantify the divergence
+
+Confirm the visual answer with numbers. For each attack file, compute mean
+absolute difference per sensor and show the top three.
+
+```python
+clean = pd.read_csv('engine17_clean.csv')
+for fname in ['attack_A.csv', 'attack_B.csv', 'attack_C.csv']:
+    a = pd.read_csv(fname)
+    d = {s: float(np.mean(np.abs(clean[s].values - a[s].values))) for s in informative}
+    top = sorted(d.items(), key=lambda kv: -kv[1])[:3]
+    print(f'{fname} top 3: {top}')
+```
+
+Expected:
+
+```
+attack_A.csv top 3: [('s11', 0.367), ('s2', 0.0), ('s3', 0.0)]
+attack_B.csv top 3: [('s14', 19.89), ('s2', 0.0), ('s3', 0.0)]
+attack_C.csv top 3: [('s9',  6.42), ('s2', 0.0), ('s3', 0.0)]
+```
+
+Only one sensor differs in each file. The other fourteen are identical
+between clean and attack. The instructor's answer key is
+`notebooks/activity2_solution.ipynb`. Final answers, in order:
+
+| File | Sensor | Attack type |
+|---|---|---|
+| `attack_A.csv` | s11 (Ps30) | Drift |
+| `attack_B.csv` | s14 (NRc) | Stuck-at |
+| `attack_C.csv` | s9 (Nc) | Gaussian noise |
 
 ## GitHub Contribution Sprint
 
