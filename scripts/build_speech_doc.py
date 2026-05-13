@@ -428,7 +428,15 @@ add_emphasis(
 )
 
 add_slide_header(24, 'Step 1 — Imports', '09:34')
-add_speech("First step: imports. Paste this code into a fresh cell. Hit Shift+Enter. You should see 'All set.'")
+add_emphasis(
+    "Quick note before Step 1: at the very top of your notebook there is a Setup cell. "
+    "Run that one FIRST. It installs the neural-trees package and downloads the data files. "
+    "Takes about twenty seconds. You should see 'Setup done.' before you do anything else."
+)
+add_speech(
+    "Okay, now Step 1: imports. Paste this code into the empty cell under the Step 1 heading. "
+    "Hit Shift+Enter. You should see 'All set.'"
+)
 add_speech(
     "If you get an IndentationError, that means one of your lines has a stray space at the beginning. "
     "Copy-paste does that sometimes. Click into the cell, hit Command-A to select everything, then Shift+Tab to clear indentation, "
@@ -709,13 +717,17 @@ doc.add_page_break()
 # ============ BLOCK 4 - CLOSE OF ACTIVITY 2 ============
 add_section_heading('Block 4 — Live Answers and Discussion', 'Running time 11:00 to 11:15')
 
-add_slide_header(47, 'Time on Clock', '10:42 — actually start')
-add_direction("This is the SLIDE that's up while teams work for 17 minutes. Start the timer here, do not skip.")
-add_speech(
-    "Okay, seventeen minutes on the clock starting now. Open activity-two-student-dot-ipynb on your laptop. "
-    "Discuss with your team. I'm walking around. If you have questions, raise a hand."
+add_slide_header(47, 'Time on Clock — Teams Working', '10:40')
+add_direction(
+    "This slide stays UP for the full 17-minute team work window. The seven step "
+    "slides (Steps 40 to 46) are reference material the students follow in their "
+    "notebooks; you do not need to walk through each one on stage. Start the timer here."
 )
-add_emphasis("I'll give hints, but I won't give you the answer. Go.")
+add_speech(
+    "Okay, seventeen minutes on the clock starting now. The seven steps are in your notebook — "
+    "follow them top to bottom. Discuss with your team. I'm walking around. If you have questions, raise a hand."
+)
+add_emphasis("I'll give hints, but I will not give you the answer. Go.")
 
 add_slide_header(48, 'Answers', '11:00')
 add_speech("Okay, time's up. Here are the answers.")
