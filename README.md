@@ -512,7 +512,6 @@ together with the accompanying paper.
 
 Cagri Temel, CTO at Hezarfen LLC, IEEE Senior Member.
 [github.com/cgrtml/neural-trees](https://github.com/cgrtml/neural-trees) ·
-[linkedin.com/in/cagritemel](https://www.linkedin.com/in/cagritemel) ·
-cagritemelusa@gmail.com
+[linkedin.com/in/cagritemel](https://www.linkedin.com/in/cagritemel)
 
 Materials released under MIT License.
